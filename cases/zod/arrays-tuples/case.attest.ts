@@ -23,5 +23,5 @@ type DataReadonly = DeepReadonly<DataT>;
 bench("zod/arrays-tuples typecheck", () => {
   return {} as DataReadonly;
 })
-  .mean([0.28, "ns"])
+  .mean([0.29, "ns"])
   .types([5, "instantiations"]);

@@ -36,5 +36,5 @@ type DataReadonly = DeepReadonly<DataT>;
 bench("valibot/arrays-tuples typecheck", () => {
   return {} as DataReadonly;
 })
-  .mean([0.29, "ns"])
+  .mean([0.28, "ns"])
   .types([5, "instantiations"]);

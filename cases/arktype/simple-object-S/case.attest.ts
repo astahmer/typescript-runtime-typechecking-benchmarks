@@ -25,5 +25,5 @@ type UserReadonly = DeepReadonly<UserT>;
 bench("arktype/simple-object-S typecheck", () => {
   return {} as UserReadonly;
 })
-  .mean([0.32, "ns"])
+  .mean([0.29, "ns"])
   .types([5, "instantiations"]);

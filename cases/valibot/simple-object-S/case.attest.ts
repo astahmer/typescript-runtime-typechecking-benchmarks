@@ -25,5 +25,5 @@ type UserReadonly = DeepReadonly<UserT>;
 bench("valibot/simple-object-S typecheck", () => {
   return {} as UserReadonly;
 })
-  .mean([0.29, "ns"])
+  .mean([0.28, "ns"])
   .types([5, "instantiations"]);

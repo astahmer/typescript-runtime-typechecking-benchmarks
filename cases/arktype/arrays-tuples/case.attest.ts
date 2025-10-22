@@ -22,5 +22,5 @@ type DataReadonly = DeepReadonly<DataT>;
 bench("arktype/arrays-tuples typecheck", () => {
   return {} as DataReadonly;
 })
-  .mean([0.28, "ns"])
+  .mean([0.31, "ns"])
   .types([5, "instantiations"]);
