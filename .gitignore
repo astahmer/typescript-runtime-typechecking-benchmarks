@@ -1,0 +1,35 @@
+# Node.js
+node_modules
+dist
+build
+pruned
+bin
+
+# Env
+.env
+
+# IDE
+.idea
+.DS_Store
+*.orig
+.cursor
+.vscode/.history
+
+# TypeScript
+*.tsbuildinfo
+
+# Netlify
+.netlify
+
+# Tanstack Router
+*.gen.ts
+
+# Jest coverage
+/packages/*/coverage
+
+# Turbo
+.turbo
+out/
+
+*.codegen.ts
+lefthook-local.yaml
