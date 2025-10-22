@@ -1,13 +1,46 @@
 {
   "name": "typescript-runtime-typechecking-benchmarks",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Benchmarks TypeScript type-check performance of inferred types from validation libraries using @ark/attest.",
+  "type": "module",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bench": "tsx ./scripts/run-all.ts",
+    "bench:one": "tsx ./cases/zod/simple-object-S/case.attest.ts",
+    "format": "prettier -w ."
   },
-  "keywords": [],
+  "keywords": [
+    "typescript",
+    "type-check",
+    "benchmark",
+    "validation",
+    "arktype",
+    "attest"
+  ],
   "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.18.2"
+  "license": "MIT",
+  "packageManager": "pnpm@10.18.2",
+  "dependencies": {
+    "@effect/schema": "^0.75.5",
+    "@sinclair/typebox": "^0.34.41",
+    "ajv": "^8.17.1",
+    "arktype": "^2.1.23",
+    "fp-ts": "^2.16.11",
+    "io-ts": "^2.2.22",
+    "runtypes": "^7.0.4",
+    "spectypes": "^2.1.11",
+    "superstruct": "^2.0.2",
+    "typia": "^9.7.2",
+    "valibot": "^1.1.0",
+    "yup": "^1.7.1",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@ark/attest": "^0.51.0",
+    "@types/node": "^24.9.1",
+    "fast-glob": "^3.3.3",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
 }
