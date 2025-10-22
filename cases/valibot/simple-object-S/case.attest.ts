@@ -14,7 +14,7 @@ const User = v.object({
 type UserT = InferOutput<typeof User>;
 
 // Synthetic usage to force evaluation
-export type DeepReadonly<T> = T extends (...args: any) => any
+type DeepReadonly<T> = T extends (...args: any) => any
   ? T
   : T extends object
     ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
@@ -24,4 +24,6 @@ type UserReadonly = DeepReadonly<UserT>;
 
 bench("valibot/simple-object-S typecheck", () => {
   return {} as UserReadonly;
-}).types([5, "instantiations"]);
+})
+  .mean([0.29, "ns"])
+  .types([5, "instantiations"]);

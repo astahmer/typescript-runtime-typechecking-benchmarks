@@ -14,7 +14,7 @@ type UserT = z.infer<typeof User>;
 
 // Synthetic usage to force evaluation
 // simple deep readonly
-export type DeepReadonly<T> = T extends (...args: any) => any
+type DeepReadonly<T> = T extends (...args: any) => any
   ? T
   : T extends object
     ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
@@ -26,4 +26,6 @@ type UserReadonly = DeepReadonly<UserT>;
 bench("zod/simple-object-S typecheck", () => {
   // Return a type-only value to drive type instantiation cost
   return {} as UserReadonly;
-}).types([5, "instantiations"]);
+})
+  .mean([0.28, "ns"])
+  .types([5, "instantiations"]);
