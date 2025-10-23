@@ -26,5 +26,5 @@ bench("effect/recursive typecheck", () => {
 
   return {} as TR;
 })
-  .mean([17.61, "us"])
+  .mean([19.02, "us"])
   .types([4474, "instantiations"]);

@@ -286,5 +286,5 @@ bench("valibot/stress-test typecheck", () => {
 
   return {} as TR;
 })
-  .mean([125.58, "us"])
+  .mean([124.23, "us"])
   .types([24898, "instantiations"]);

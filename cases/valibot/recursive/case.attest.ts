@@ -29,5 +29,5 @@ bench("valibot/recursive typecheck", () => {
 
   return {} as TR;
 })
-  .mean([1.26, "us"])
+  .mean([1.28, "us"])
   .types([8985, "instantiations"]);

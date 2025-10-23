@@ -64,5 +64,5 @@ bench("effect/nested-M typecheck", () => {
 
   return {} as TR;
 })
-  .mean([141.41, "us"])
+  .mean([151.8, "us"])
   .types([11569, "instantiations"]);

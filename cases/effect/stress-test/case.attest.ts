@@ -150,5 +150,5 @@ bench("effect/stress-test typecheck", () => {
 
   return {} as TR;
 })
-  .mean([447.06, "us"])
+  .mean([431.52, "us"])
   .types([23636, "instantiations"]);

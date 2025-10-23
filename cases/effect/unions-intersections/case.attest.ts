@@ -44,5 +44,5 @@ bench("effect/unions-intersections typecheck", () => {
 
   return {} as TR;
 })
-  .mean([108.71, "us"])
+  .mean([104.25, "us"])
   .types([11473, "instantiations"]);

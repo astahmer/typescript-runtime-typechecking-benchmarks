@@ -22,5 +22,5 @@ bench("arktype/recursive typecheck", () => {
 
   return {} as TR;
 })
-  .mean([1.8, "ms"])
+  .mean([1.31, "ms"])
   .types([7913, "instantiations"]);

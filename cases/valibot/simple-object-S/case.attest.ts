@@ -25,5 +25,5 @@ bench("valibot/simple-object-S typecheck", () => {
 
   return {} as UserReadonly;
 })
-  .mean([4.86, "us"])
+  .mean([4.44, "us"])
   .types([9082, "instantiations"]);

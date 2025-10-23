@@ -26,5 +26,5 @@ bench("effect/arrays-tuples typecheck", () => {
 
   return {} as DataReadonly;
 })
-  .mean([31.78, "us"])
+  .mean([34.51, "us"])
   .types([6391, "instantiations"]);

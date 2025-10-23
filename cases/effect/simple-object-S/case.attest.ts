@@ -28,5 +28,5 @@ bench("effect/simple-object-S typecheck", () => {
 
   return {} as UserReadonly;
 })
-  .mean([36.53, "us"])
+  .mean([40.96, "us"])
   .types([5464, "instantiations"]);
