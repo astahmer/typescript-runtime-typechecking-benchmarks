@@ -1,26 +1,26 @@
 import { scope } from "arktype";
 import { bench } from "@ark/attest";
 
-// Recursive using scope alias reference
-const types = scope({
-  Node: {
-    value: "string",
-    "children?": "Node[]",
-  },
-}).export();
-
-type T = typeof types.Node.infer;
-
-type DeepReadonly<T> = T extends (...args: any) => any
-  ? T
-  : T extends object
-    ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
-    : T;
-
-type TR = DeepReadonly<T>;
-
 bench("arktype/recursive typecheck", () => {
+  // Recursive using scope alias reference
+  const types = scope({
+    Node: {
+      value: "string",
+      "children?": "Node[]",
+    },
+  }).export();
+
+  type T = typeof types.Node.infer;
+
+  type DeepReadonly<T> = T extends (...args: any) => any
+    ? T
+    : T extends object
+      ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+      : T;
+
+  type TR = DeepReadonly<T>;
+
   return {} as TR;
 })
-  .mean([0.28, "ns"])
-  .types([5, "instantiations"]);
+  .mean([1.27, "ms"])
+  .types([7913, "instantiations"]);

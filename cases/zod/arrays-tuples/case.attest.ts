@@ -1,27 +1,24 @@
 import { z } from "zod";
 import { bench } from "@ark/attest";
 
-// Schema: array of objects + fixed-length tuple
-const Item = z.object({ id: z.string(), qty: z.number().int().min(0) });
-const Data = z.object({
-  items: z.array(Item),
-  pair: z.tuple([z.string(), z.number()]),
-});
-
-// Inferred type
-type DataT = z.infer<typeof Data>;
-
-// Synthetic usage to force evaluation
-type DeepReadonly<T> = T extends (...args: any) => any
-  ? T
-  : T extends object
-    ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
-    : T;
-
-type DataReadonly = DeepReadonly<DataT>;
-
 bench("zod/arrays-tuples typecheck", () => {
+  const Item = z.object({ id: z.string(), qty: z.number().int().min(0) });
+  const Data = z.object({
+    items: z.array(Item),
+    pair: z.tuple([z.string(), z.number()]),
+  });
+
+  type DataT = z.infer<typeof Data>;
+
+  type DeepReadonly<T> = T extends (...args: any) => any
+    ? T
+    : T extends object
+      ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+      : T;
+
+  type DataReadonly = DeepReadonly<DataT>;
+
   return {} as DataReadonly;
 })
-  .mean([0.29, "ns"])
-  .types([5, "instantiations"]);
+  .mean([75.15, "us"])
+  .types([682, "instantiations"]);

@@ -5,8 +5,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "bench": "tsx ./scripts/run-all.ts",
-    "bench:one": "tsx ./cases/zod/simple-object-S/case.attest.ts",
+    "bench": "ATTEST_updateSnapshots=1 ATTEST_benchErrorOnThresholdExceeded=false node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types ./scripts/run-all.ts",
+    "bench:one": "ATTEST_updateSnapshots=1 node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types ./cases/zod/simple-object-S/case.attest.ts",
     "format": "prettier -w ."
   },
   "keywords": [

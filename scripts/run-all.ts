@@ -20,7 +20,7 @@ async function run() {
     const rel = relative(root, file)
     console.log(`\n▶ Running ${rel}`)
     await new Promise<void>((resolve, reject) => {
-      const child = spawn("tsx", [file], {
+        const child = spawn("node", [..."--no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types".split(" "), file], {
         stdio: "inherit",
         env: process.env,
       })

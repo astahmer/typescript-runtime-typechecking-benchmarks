@@ -13,6 +13,8 @@
             "ES2022"
         ],
         "composite": false,
-        "incremental": false
+        "incremental": false,
+        "isolatedModules": true,
+        "verbatimModuleSyntax": true
     }
 }
