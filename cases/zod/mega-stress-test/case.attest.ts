@@ -19,23 +19,21 @@ bench("zod/mega-stress-test typecheck", () => {
     refs?: NodeT[];
   };
 
-  const Node: z.ZodType<NodeT> = z.lazy(() =>
-    z.object({
-      id: z.string(),
-      type: z.enum(["leaf", "branch", "root"]),
-      value: z.union([z.string(), z.number(), z.boolean()]),
-      metadata: z.object({
-        tags: z.array(z.string()),
-        score: z.number().min(0),
-        nested: z.object({
-          level: z.number().int(),
-          data: z.array(z.string()),
-        }),
-      }),
-      children: z.array(Node).optional(),
-      refs: z.array(Node).optional(),
+  const Node: z.ZodType<NodeT> = z.object({
+    id: z.string(),
+    type: z.enum(["leaf", "branch", "root"]),
+    value: z.union([z.string(), z.number(), z.boolean()]),
+    metadata: z.object({
+    tags: z.array(z.string()),
+    score: z.number().min(0),
+    nested: z.object({
+        level: z.number().int(),
+        data: z.array(z.string()),
     }),
-  ) as any;
+    }),
+    children: z.array(z.lazy((): z.ZodType<NodeT> => Node as z.ZodType<NodeT>)).optional(),
+    refs: z.array(z.lazy((): z.ZodType<NodeT> => Node as z.ZodType<NodeT>)).optional(),
+})
 
   // Complex discriminated union with heavy nesting
   const EventA = z.object({

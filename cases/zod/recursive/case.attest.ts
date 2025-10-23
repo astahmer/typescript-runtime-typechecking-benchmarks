@@ -2,13 +2,13 @@ import { z } from "zod";
 import { bench } from "@ark/attest";
 
 bench("zod/recursive typecheck", () => {
-  type NodeT = { value: string; children?: NodeT[] };
+  type NodeT = { value: string; children: NodeT[] | undefined };
   const Node: z.ZodType<NodeT> = z.lazy(() =>
     z.object({
       value: z.string(),
-      children: z.array(Node).optional(),
+      children: z.array(z.lazy(() => Node  as z.ZodType<NodeT>)).optional(),
     }),
-  ) as any;
+  );
   type T = z.infer<typeof Node>;
 
   type DeepReadonly<T> = T extends (...args: any) => any

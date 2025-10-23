@@ -19,7 +19,7 @@ bench("effect/mega-stress-test typecheck", () => {
     refs?: readonly NodeT[];
   }
 
-  const Node: S.Schema<NodeT> = S.Struct({
+  const Node = S.Struct({
     id: S.String,
     type: S.Literal("leaf", "branch", "root"),
     value: S.Union(S.String, S.Number, S.Boolean),
@@ -31,9 +31,13 @@ bench("effect/mega-stress-test typecheck", () => {
         data: S.Array(S.String),
       }),
     }),
-    children: S.optional(S.Array(S.suspend(() => Node))),
-    refs: S.optional(S.Array(S.suspend(() => Node))),
-  }) as any;
+    children: S.optional(
+      S.Array(S.suspend((): S.Schema<NodeT> => Node as S.Schema<NodeT>)),
+    ),
+    refs: S.optional(
+      S.Array(S.suspend((): S.Schema<NodeT> => Node as S.Schema<NodeT>)),
+    ),
+  });
 
   // Complex discriminated union with heavy nesting
   const EventA = S.Struct({

@@ -20,7 +20,7 @@ bench("valibot/mega-stress-test typecheck", () => {
     refs?: NodeT[];
   };
 
-  const Node: v.GenericSchema<NodeT> = v.object({
+  const Node = v.object({
     id: v.string(),
     type: v.picklist(["leaf", "branch", "root"]),
     value: v.union([v.string(), v.number(), v.boolean()]),
@@ -32,9 +32,13 @@ bench("valibot/mega-stress-test typecheck", () => {
         data: v.array(v.string()),
       }),
     }),
-    children: v.optional(v.lazy(() => v.array(Node))),
-    refs: v.optional(v.lazy(() => v.array(Node))),
-  }) as any;
+    children: v.optional(
+      v.array(v.lazy((): v.GenericSchema<NodeT> => Node as v.GenericSchema<NodeT>)),
+    ),
+    refs: v.optional(
+      v.array(v.lazy((): v.GenericSchema<NodeT> => Node as v.GenericSchema<NodeT>)),
+    ),
+  });
 
   // Complex discriminated union with heavy nesting
   const EventA = v.object({
