@@ -8,10 +8,14 @@ bench("valibot/recursive typecheck", () => {
     children?: NodeT[];
   };
 
-  const Node: v.GenericSchema<NodeT> = v.object({
+  const Node = v.object({
     value: v.string(),
-    children: v.optional(v.lazy(() => v.array(Node))),
-  }) as any;
+    children: v.optional(
+      v.array(
+        v.lazy((): v.GenericSchema<NodeT> => Node as v.GenericSchema<NodeT>),
+      ),
+    ),
+  });
 
   type T = InferOutput<typeof Node>;
 
@@ -25,5 +29,5 @@ bench("valibot/recursive typecheck", () => {
 
   return {} as TR;
 })
-  .mean([1.02, "us"])
-  .types([5239, "instantiations"]);
+  .mean([1.26, "us"])
+  .types([8985, "instantiations"]);

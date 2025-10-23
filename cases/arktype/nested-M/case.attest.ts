@@ -51,5 +51,5 @@ bench("arktype/nested-M typecheck", () => {
 
   return {} as TR;
 })
-  .mean([430.81, "us"])
+  .mean([411.32, "us"])
   .types([24084, "instantiations"]);

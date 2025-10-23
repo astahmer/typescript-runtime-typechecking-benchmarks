@@ -36,5 +36,5 @@ bench("valibot/arrays-tuples typecheck", () => {
 
   return {} as DataReadonly;
 })
-  .mean([3.26, "us"])
+  .mean([3.58, "us"])
   .types([7731, "instantiations"]);

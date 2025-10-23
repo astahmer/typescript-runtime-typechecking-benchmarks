@@ -1,19 +1,19 @@
-import { type } from "arktype";
 import { bench } from "@ark/attest";
+import * as S from "@effect/schema/Schema";
 
-bench("arktype/arrays-tuples typecheck", () => {
+bench("effect/arrays-tuples typecheck", () => {
   // Schema: array of objects + fixed-length tuple
-  const Item = type({
-    id: "string",
-    qty: "number.integer >= 0",
+  const Item = S.Struct({
+    id: S.String,
+    qty: S.Number.pipe(S.int(), S.greaterThanOrEqualTo(0)),
   });
-  const Data = type({
-    items: Item.array(),
-    pair: ["string", "number"],
+  const Data = S.Struct({
+    items: S.Array(Item),
+    pair: S.Tuple(S.String, S.Number),
   });
 
   // Inferred type
-  type DataT = typeof Data.infer;
+  type DataT = S.Schema.Type<typeof Data>;
 
   // Synthetic usage to force evaluation
   type DeepReadonly<T> = T extends (...args: any) => any
@@ -26,5 +26,5 @@ bench("arktype/arrays-tuples typecheck", () => {
 
   return {} as DataReadonly;
 })
-  .mean([87.65, "us"])
-  .types([10136, "instantiations"]);
+  .mean([31.78, "us"])
+  .types([6391, "instantiations"]);

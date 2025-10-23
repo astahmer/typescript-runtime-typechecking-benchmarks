@@ -47,5 +47,5 @@ bench("valibot/unions-intersections typecheck", () => {
 
   return {} as TR;
 })
-  .mean([9.66, "us"])
+  .mean([11.11, "us"])
   .types([11706, "instantiations"]);

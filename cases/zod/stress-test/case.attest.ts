@@ -307,5 +307,5 @@ bench("zod/stress-test typecheck", () => {
   type TR = DeepReadonly<T>;
   return {} as TR;
 })
-  .mean([2.96, "ms"])
+  .mean([1.98, "ms"])
   .types([3643, "instantiations"]);

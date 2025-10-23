@@ -46,5 +46,5 @@ bench("zod/unions-intersections typecheck", () => {
 
   return {} as TR;
 })
-  .mean([211.2, "us"])
+  .mean([220.17, "us"])
   .types([2539, "instantiations"]);

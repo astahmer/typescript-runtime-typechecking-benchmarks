@@ -21,5 +21,5 @@ bench("zod/simple-object-S typecheck", () => {
 
   return {} as UserReadonly;
 })
-  .mean([88.74, "us"])
+  .mean([81.11, "us"])
   .types([1033, "instantiations"]);

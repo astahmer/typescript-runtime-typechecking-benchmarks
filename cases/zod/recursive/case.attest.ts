@@ -21,5 +21,5 @@ bench("zod/recursive typecheck", () => {
 
   return {} as TR;
 })
-  .mean([4.99, "us"])
+  .mean([5.32, "us"])
   .types([181, "instantiations"]);

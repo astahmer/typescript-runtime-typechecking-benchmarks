@@ -25,5 +25,5 @@ bench("arktype/simple-object-S typecheck", () => {
 
   return {} as UserReadonly;
 })
-  .mean([32.96, "us"])
+  .mean([33.86, "us"])
   .types([10469, "instantiations"]);

@@ -65,5 +65,5 @@ bench("valibot/nested-M typecheck", () => {
 
   return {} as TR;
 })
-  .mean([15.4, "us"])
+  .mean([15.82, "us"])
   .types([14211, "instantiations"]);
