@@ -155,6 +155,18 @@ function getTestCaseInfo(testCase: string): { title: string; description: string
 - 8 nested objects with arrays and enums
 - ~100+ total properties`,
     },
+    "mega-stress-test": {
+      title: "Mega Stress Test 🔥",
+      description: `Extreme type complexity test with:
+- Recursive tree nodes with bidirectional parent/child references
+- Complex discriminated unions (3 event types with nested structures)
+- Deep nesting (5+ levels)
+- 3D matrix arrays
+- Polymorphic records with multiple variants
+- Complex tuple combinations
+- Intersection-like patterns
+- Conditional-like type structures`,
+    },
   };
 
   return (
@@ -174,6 +186,7 @@ function generateMarkdown(results: BenchmarkResult[]): string {
     "recursive",
     "unions-intersections",
     "stress-test",
+    "mega-stress-test",
   ];
 
   const libraries = [...new Set(results.map((r) => r.library))].sort();
