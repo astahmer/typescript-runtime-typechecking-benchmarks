@@ -1,5 +1,5 @@
 import { bench } from "@ark/attest";
-import * as S from "@effect/schema/Schema";
+import * as S from "effect/Schema";
 
 bench("effect/mega-stress-test typecheck", () => {
   // Deep recursive tree structure with unions
@@ -274,5 +274,5 @@ bench("effect/mega-stress-test typecheck", () => {
 
   return {} as TR;
 })
-  .mean([813.31, "us"])
-  .types([40818, "instantiations"]);
+  .mean([826.01, "us"])
+  .types([44836, "instantiations"]);

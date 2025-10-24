@@ -1,5 +1,5 @@
 import { bench } from "@ark/attest";
-import * as S from "@effect/schema/Schema";
+import * as S from "effect/Schema";
 
 bench("effect/simple-object-S typecheck", () => {
   // Schema
@@ -28,5 +28,5 @@ bench("effect/simple-object-S typecheck", () => {
 
   return {} as UserReadonly;
 })
-  .mean([40.96, "us"])
+  .mean([38.37, "us"])
   .types([5464, "instantiations"]);

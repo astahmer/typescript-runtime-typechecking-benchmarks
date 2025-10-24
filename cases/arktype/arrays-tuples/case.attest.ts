@@ -26,5 +26,5 @@ bench("arktype/arrays-tuples typecheck", () => {
 
   return {} as DataReadonly;
 })
-  .mean([89.9, "us"])
+  .mean([88.05, "us"])
   .types([10136, "instantiations"]);

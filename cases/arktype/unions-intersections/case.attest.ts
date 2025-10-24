@@ -45,5 +45,5 @@ bench("arktype/unions-intersections typecheck", () => {
 
   return {} as TR;
 })
-  .mean([325.69, "us"])
+  .mean([335.19, "us"])
   .types([26456, "instantiations"]);

@@ -6,7 +6,7 @@ bench("zod/recursive typecheck", () => {
   const Node: z.ZodType<NodeT> = z.lazy(() =>
     z.object({
       value: z.string(),
-      children: z.array(z.lazy(() => Node  as z.ZodType<NodeT>)).optional(),
+      children: z.array(z.lazy(() => Node as z.ZodType<NodeT>)).optional(),
     }),
   );
   type T = z.infer<typeof Node>;
@@ -21,5 +21,5 @@ bench("zod/recursive typecheck", () => {
 
   return {} as TR;
 })
-  .mean([4.86, "us"])
-  .types([181, "instantiations"]);
+  .mean([5.14, "us"])
+  .types([27032, "instantiations"]);

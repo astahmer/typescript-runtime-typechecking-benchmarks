@@ -7,7 +7,7 @@
   "scripts": {
     "bench": "ATTEST_updateSnapshots=1 ATTEST_benchErrorOnThresholdExceeded=false node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types ./scripts/run-all.ts",
     "bench:one": "ATTEST_updateSnapshots=1 node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types ./cases/zod/simple-object-S/case.attest.ts",
-    "generate-results": "node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types ./scripts/generate-results.ts",
+    "gen": "node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types ./scripts/generate-results.ts",
     "format": "prettier -w ."
   },
   "keywords": [
@@ -22,10 +22,12 @@
   "license": "MIT",
   "packageManager": "pnpm@10.18.2",
   "dependencies": {
-    "@effect/schema": "^0.75.5",
     "@sinclair/typebox": "^0.34.41",
+    "@trpc/client": "^11.6.0",
+    "@trpc/server": "^11.6.0",
     "ajv": "^8.17.1",
     "arktype": "^2.1.23",
+    "effect": "^3.18.4",
     "fp-ts": "^2.16.11",
     "io-ts": "^2.2.22",
     "runtypes": "^7.0.4",

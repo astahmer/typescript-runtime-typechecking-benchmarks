@@ -167,6 +167,25 @@ function getTestCaseInfo(testCase: string): { title: string; description: string
 - Intersection-like patterns
 - Conditional-like type structures`,
     },
+    "petstore-api": {
+      title: "Petstore API Schema",
+      description: `REST API schema definition with:
+- 15+ endpoint definitions with request/response types
+- Pet, Order, Customer, Review, Inventory schemas
+- Pagination, validation, error handling
+- Complex nested structures and unions
+- ~30+ schema definitions`,
+    },
+    "trpc-petstore": {
+      title: "tRPC Petstore Router",
+      description: `Full-featured tRPC router with:
+- 25+ procedures (queries and mutations)
+- Pet, Order, Customer, Review, Inventory, Analytics routers
+- Complex input/output validation schemas
+- Mock data factories
+- Discriminated unions for payments, order status
+- ~40+ schema definitions with deep nesting`,
+    },
   };
 
   return (
@@ -187,6 +206,8 @@ function generateMarkdown(results: BenchmarkResult[]): string {
     "unions-intersections",
     "stress-test",
     "mega-stress-test",
+    "petstore-api",
+    "trpc-petstore",
   ];
 
   const libraries = [...new Set(results.map((r) => r.library))].sort();

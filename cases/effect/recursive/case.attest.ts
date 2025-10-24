@@ -1,5 +1,5 @@
 import { bench } from "@ark/attest";
-import * as S from "@effect/schema/Schema";
+import * as S from "effect/Schema"
 
 bench("effect/recursive typecheck", () => {
   type NodeT = {
@@ -26,5 +26,5 @@ bench("effect/recursive typecheck", () => {
 
   return {} as TR;
 })
-  .mean([19.02, "us"])
+  .mean([18.67, "us"])
   .types([4474, "instantiations"]);

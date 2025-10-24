@@ -33,10 +33,14 @@ bench("valibot/mega-stress-test typecheck", () => {
       }),
     }),
     children: v.optional(
-      v.array(v.lazy((): v.GenericSchema<NodeT> => Node as v.GenericSchema<NodeT>)),
+      v.array(
+        v.lazy((): v.GenericSchema<NodeT> => Node as v.GenericSchema<NodeT>),
+      ),
     ),
     refs: v.optional(
-      v.array(v.lazy((): v.GenericSchema<NodeT> => Node as v.GenericSchema<NodeT>)),
+      v.array(
+        v.lazy((): v.GenericSchema<NodeT> => Node as v.GenericSchema<NodeT>),
+      ),
     ),
   });
 
@@ -278,5 +282,5 @@ bench("valibot/mega-stress-test typecheck", () => {
 
   return {} as TR;
 })
-  .mean([60.75, "us"])
-  .types([30371, "instantiations"]);
+  .mean([67.06, "us"])
+  .types([31252, "instantiations"]);

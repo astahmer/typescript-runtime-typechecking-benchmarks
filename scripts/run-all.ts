@@ -2,6 +2,7 @@ import fg from "fast-glob"
 import { spawn } from "node:child_process"
 import { fileURLToPath } from "node:url"
 import { dirname, relative } from "node:path"
+import { Effect } from "effect"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -16,7 +17,13 @@ async function run() {
     process.exit(1)
   }
 
-  for (const file of entries) {
+  await Effect.runPromise(Effect.gen(function* () {
+    return yield* Effect.all(entries.map((file) => Effect.tryPromise(() => runCase(file))), {
+      concurrency: 2
+    })
+  }))
+
+  async function runCase(file: string) {
     const rel = relative(root, file)
     console.log(`\n▶ Running ${rel}`)
     await new Promise<void>((resolve, reject) => {

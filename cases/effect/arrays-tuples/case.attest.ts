@@ -1,5 +1,5 @@
 import { bench } from "@ark/attest";
-import * as S from "@effect/schema/Schema";
+import * as S from "effect/Schema";
 
 bench("effect/arrays-tuples typecheck", () => {
   // Schema: array of objects + fixed-length tuple
@@ -26,5 +26,5 @@ bench("effect/arrays-tuples typecheck", () => {
 
   return {} as DataReadonly;
 })
-  .mean([34.51, "us"])
-  .types([6391, "instantiations"]);
+  .mean([37.65, "us"])
+  .types([6286, "instantiations"]);

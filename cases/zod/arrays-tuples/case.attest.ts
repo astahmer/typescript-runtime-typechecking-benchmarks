@@ -20,5 +20,5 @@ bench("zod/arrays-tuples typecheck", () => {
 
   return {} as DataReadonly;
 })
-  .mean([64.6, "us"])
+  .mean([66.71, "us"])
   .types([682, "instantiations"]);

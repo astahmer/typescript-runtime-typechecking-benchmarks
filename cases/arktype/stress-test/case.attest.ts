@@ -148,5 +148,5 @@ bench("arktype/stress-test typecheck", () => {
 
   return {} as TR;
 })
-  .mean([1.14, "ms"])
+  .mean([1.12, "ms"])
   .types([45887, "instantiations"]);

@@ -1,5 +1,5 @@
 import { bench } from "@ark/attest";
-import * as S from "@effect/schema/Schema";
+import * as S from "effect/Schema";
 
 bench("effect/unions-intersections typecheck", () => {
   // Build meta inline into each variant to avoid uncertain merge APIs
@@ -44,5 +44,5 @@ bench("effect/unions-intersections typecheck", () => {
 
   return {} as TR;
 })
-  .mean([104.25, "us"])
-  .types([11473, "instantiations"]);
+  .mean([109.06, "us"])
+  .types([12330, "instantiations"]);

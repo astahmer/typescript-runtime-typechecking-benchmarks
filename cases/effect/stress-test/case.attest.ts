@@ -1,5 +1,5 @@
 import { bench } from "@ark/attest";
-import * as S from "@effect/schema/Schema";
+import * as S from "effect/Schema";
 
 bench("effect/stress-test typecheck", () => {
   const DataItem = S.Struct({
@@ -150,5 +150,5 @@ bench("effect/stress-test typecheck", () => {
 
   return {} as TR;
 })
-  .mean([431.52, "us"])
-  .types([23636, "instantiations"]);
+  .mean([467.61, "us"])
+  .types([24805, "instantiations"]);

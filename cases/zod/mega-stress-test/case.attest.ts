@@ -24,16 +24,20 @@ bench("zod/mega-stress-test typecheck", () => {
     type: z.enum(["leaf", "branch", "root"]),
     value: z.union([z.string(), z.number(), z.boolean()]),
     metadata: z.object({
-    tags: z.array(z.string()),
-    score: z.number().min(0),
-    nested: z.object({
+      tags: z.array(z.string()),
+      score: z.number().min(0),
+      nested: z.object({
         level: z.number().int(),
         data: z.array(z.string()),
+      }),
     }),
-    }),
-    children: z.array(z.lazy((): z.ZodType<NodeT> => Node as z.ZodType<NodeT>)).optional(),
-    refs: z.array(z.lazy((): z.ZodType<NodeT> => Node as z.ZodType<NodeT>)).optional(),
-})
+    children: z
+      .array(z.lazy((): z.ZodType<NodeT> => Node as z.ZodType<NodeT>))
+      .optional(),
+    refs: z
+      .array(z.lazy((): z.ZodType<NodeT> => Node as z.ZodType<NodeT>))
+      .optional(),
+  });
 
   // Complex discriminated union with heavy nesting
   const EventA = z.object({
@@ -273,5 +277,5 @@ bench("zod/mega-stress-test typecheck", () => {
 
   return {} as TR;
 })
-  .mean([1.13, "ms"])
-  .types([4223, "instantiations"]);
+  .mean([1.69, "ms"])
+  .types([32455, "instantiations"]);

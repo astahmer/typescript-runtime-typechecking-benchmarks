@@ -61,5 +61,5 @@ bench("zod/nested-M typecheck", () => {
 
   return {} as TR;
 })
-  .mean([295.45, "us"])
+  .mean([401.22, "us"])
   .types([1403, "instantiations"]);

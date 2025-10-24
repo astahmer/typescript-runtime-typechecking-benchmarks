@@ -1,5 +1,5 @@
 import { bench } from "@ark/attest";
-import * as S from "@effect/schema/Schema";
+import * as S from "effect/Schema";
 
 bench("effect/nested-M typecheck", () => {
   const Address = S.Struct({
@@ -64,5 +64,5 @@ bench("effect/nested-M typecheck", () => {
 
   return {} as TR;
 })
-  .mean([151.8, "us"])
+  .mean([150.45, "us"])
   .types([11569, "instantiations"]);
