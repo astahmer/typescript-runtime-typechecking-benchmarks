@@ -166,8 +166,9 @@ REST API schema definition with:
 | **Valibot** | **204.56 us**      | 76,158                |
 | Effect      | 1,670 μs (1.67 ms) | 61,999                |
 | Zod         | 3,790 μs (3.79 ms) | 6,711                 |
+| ArkType     | 7,680 μs (7.68 ms) | 136,337               |
 
-**Winner**: Valibot (19x faster than Zod) ⚡
+**Winner**: Valibot (38x faster than ArkType) ⚡
 
 ---
 
@@ -187,8 +188,9 @@ Full-featured tRPC router with:
 | **Valibot** | **662.53 us**      | 112,382               |
 | Effect      | 3,690 μs (3.69 ms) | 95,452                |
 | Zod         | 5,570 μs (5.57 ms) | 38,241                |
+| ArkType     | 7,600 μs (7.60 ms) | 224,253               |
 
-**Winner**: Valibot (8x faster than Zod) ⚡
+**Winner**: Valibot (11x faster than ArkType) ⚡
 
 ---
 
@@ -199,7 +201,7 @@ Full-featured tRPC router with:
 1. 🥇 **Valibot** (baseline)
 2. 🥈 **Effect** (6.4x slower)
 3. 🥉 **Zod** (12.8x slower)
-4.  **ArkType** (22.0x slower)
+4.  **ArkType** (31.1x slower)
 
 ---
 
