@@ -1,25 +1,25 @@
-import { z } from "zod";
 import { bench } from "@ark/attest";
+import { z } from "zod";
 
 bench("zod/simple-object-S typecheck", () => {
-  const User = z.object({
-    id: z.string(),
-    email: z.string().email(),
-    age: z.number().int().min(0).max(120),
-    roles: z.array(z.enum(["user", "admin"])),
-  });
+	const User = z.object({
+		id: z.string(),
+		email: z.string().email(),
+		age: z.number().int().min(0).max(120),
+		roles: z.array(z.enum(["user", "admin"])),
+	});
 
-  type UserT = z.infer<typeof User>;
+	type UserT = z.infer<typeof User>;
 
-  type DeepReadonly<T> = T extends (...args: any) => any
-    ? T
-    : T extends object
-      ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
-      : T;
+	type DeepReadonly<T> = T extends (...args: any) => any
+		? T
+		: T extends object
+			? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+			: T;
 
-  type UserReadonly = DeepReadonly<UserT>;
+	type UserReadonly = DeepReadonly<UserT>;
 
-  return {} as UserReadonly;
+	return {} as UserReadonly;
 })
-  .mean([84.19, "us"])
-  .types([1033, "instantiations"]);
+	.mean([84.19, "us"])
+	.types([1033, "instantiations"]);
