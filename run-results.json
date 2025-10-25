@@ -1,0 +1,146 @@
+{
+  "cases/arktype/arrays-tuples/case.attest.ts": {
+    "duration": "7s 158ms 316833ns",
+    "ms": 7158.316833
+  },
+  "cases/arktype/nested-M/case.attest.ts": {
+    "duration": "6s 969ms 705042ns",
+    "ms": 6969.705042
+  },
+  "cases/arktype/mega-stress-test/case.attest.ts": {
+    "duration": "17s 106ms 177916ns",
+    "ms": 17106.177916
+  },
+  "cases/arktype/recursive/case.attest.ts": {
+    "duration": "8s 191ms 417750ns",
+    "ms": 8191.41775
+  },
+  "cases/arktype/petstore-api/case.attest.ts": {
+    "duration": "9s 329ms 426041ns",
+    "ms": 9329.426041
+  },
+  "cases/arktype/simple-object-S/case.attest.ts": {
+    "duration": "6s 905ms 826375ns",
+    "ms": 6905.826375
+  },
+  "cases/arktype/stress-test/case.attest.ts": {
+    "duration": "7s 579ms 443750ns",
+    "ms": 7579.44375
+  },
+  "cases/arktype/trpc-petstore/case.attest.ts": {
+    "duration": "9s 961ms 261000ns",
+    "ms": 9961.261
+  },
+  "cases/arktype/unions-intersections/case.attest.ts": {
+    "duration": "7s 115ms 267625ns",
+    "ms": 7115.267625
+  },
+  "cases/effect/arrays-tuples/case.attest.ts": {
+    "duration": "7s 409ms 413042ns",
+    "ms": 7409.413042
+  },
+  "cases/effect/mega-stress-test/case.attest.ts": {
+    "duration": "8s 141ms 13542ns",
+    "ms": 8141.013542
+  },
+  "cases/effect/nested-M/case.attest.ts": {
+    "duration": "7s 556ms 174958ns",
+    "ms": 7556.174958
+  },
+  "cases/effect/petstore-api/case.attest.ts": {
+    "duration": "8s 243ms 655666ns",
+    "ms": 8243.655666
+  },
+  "cases/effect/recursive/case.attest.ts": {
+    "duration": "7s 231ms 451000ns",
+    "ms": 7231.451
+  },
+  "cases/effect/simple-object-S/case.attest.ts": {
+    "duration": "7s 458ms 913667ns",
+    "ms": 7458.913667
+  },
+  "cases/effect/stress-test/case.attest.ts": {
+    "duration": "7s 868ms 505416ns",
+    "ms": 7868.505416
+  },
+  "cases/effect/trpc-petstore/case.attest.ts": {
+    "duration": "10s 713ms 390375ns",
+    "ms": 10713.390375
+  },
+  "cases/effect/unions-intersections/case.attest.ts": {
+    "duration": "7s 335ms 34917ns",
+    "ms": 7335.034917
+  },
+  "cases/valibot/arrays-tuples/case.attest.ts": {
+    "duration": "6s 826ms 420000ns",
+    "ms": 6826.42
+  },
+  "cases/valibot/nested-M/case.attest.ts": {
+    "duration": "6s 891ms 403541ns",
+    "ms": 6891.403541
+  },
+  "cases/valibot/mega-stress-test/case.attest.ts": {
+    "duration": "6s 959ms 700833ns",
+    "ms": 6959.700833
+  },
+  "cases/valibot/petstore-api/case.attest.ts": {
+    "duration": "7s 265ms 73500ns",
+    "ms": 7265.0735
+  },
+  "cases/valibot/simple-object-S/case.attest.ts": {
+    "duration": "6s 801ms 433916ns",
+    "ms": 6801.433916
+  },
+  "cases/valibot/stress-test/case.attest.ts": {
+    "duration": "7s 154ms 996542ns",
+    "ms": 7154.996542
+  },
+  "cases/valibot/recursive/case.attest.ts": {
+    "duration": "6s 849ms 521583ns",
+    "ms": 6849.521583
+  },
+  "cases/valibot/trpc-petstore/case.attest.ts": {
+    "duration": "7s 560ms 138792ns",
+    "ms": 7560.138792
+  },
+  "cases/valibot/unions-intersections/case.attest.ts": {
+    "duration": "6s 800ms 44750ns",
+    "ms": 6800.04475
+  },
+  "cases/zod/arrays-tuples/case.attest.ts": {
+    "duration": "6s 898ms 585792ns",
+    "ms": 6898.585792
+  },
+  "cases/zod/mega-stress-test/case.attest.ts": {
+    "duration": "8s 29ms 653958ns",
+    "ms": 8029.653958
+  },
+  "cases/zod/nested-M/case.attest.ts": {
+    "duration": "6s 810ms 407208ns",
+    "ms": 6810.407208
+  },
+  "cases/zod/petstore-api/case.attest.ts": {
+    "duration": "8s 9ms 366791ns",
+    "ms": 8009.366791
+  },
+  "cases/zod/simple-object-S/case.attest.ts": {
+    "duration": "6s 732ms 591708ns",
+    "ms": 6732.591708
+  },
+  "cases/zod/recursive/case.attest.ts": {
+    "duration": "6s 764ms 675083ns",
+    "ms": 6764.675083
+  },
+  "cases/zod/stress-test/case.attest.ts": {
+    "duration": "7s 481ms 668917ns",
+    "ms": 7481.668917
+  },
+  "cases/zod/trpc-petstore/case.attest.ts": {
+    "duration": "10s 967ms 665709ns",
+    "ms": 10967.665709
+  },
+  "cases/zod/unions-intersections/case.attest.ts": {
+    "duration": "6s 858ms 857083ns",
+    "ms": 6858.857083
+  }
+}

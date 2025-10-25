@@ -1,7 +1,8 @@
 import { spawn } from "node:child_process";
 import { dirname, relative } from "node:path";
+import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { Effect } from "effect";
+import { Duration, Effect } from "effect";
 import fg from "fast-glob";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -21,9 +22,29 @@ async function run() {
 
 	await Effect.runPromise(
 		Effect.gen(function* () {
-			return yield* Effect.all(
-				entries.map((file) => Effect.tryPromise(() => runCase(file))),
+			const results = yield* Effect.all(
+				entries.map((file) =>
+					Effect.tryPromise(() => runCase(file).then(() => file)).pipe(
+						Effect.timed,
+						Effect.map(([duration, file]) => ({ duration, file })),
+					),
+				),
 			);
+			// Write per-file duration results to a JSON map at the repo root
+			const map = Object.fromEntries(
+				results.map(({ duration, file }) => [
+					relative(root, file),
+					{
+						duration: Duration.format(duration),
+						ms: Duration.toMillis(duration),
+					},
+				]),
+			);
+			const outPath = `${root}/run-results.json`;
+			yield* Effect.tryPromise(() =>
+				writeFile(outPath, JSON.stringify(map, null, 2) + "\n", "utf8"),
+			);
+			console.log(`\n📝 Wrote per-file durations to ${outPath}`);
 		}),
 	);
 
