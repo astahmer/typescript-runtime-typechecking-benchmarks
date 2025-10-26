@@ -19,7 +19,7 @@ bench("zod/mega-stress-test typecheck", () => {
 		refs?: NodeT[];
 	};
 
-	const Node: z.ZodType<NodeT> = z.object({
+	const Node = z.object({
 		id: z.string(),
 		type: z.enum(["leaf", "branch", "root"]),
 		value: z.union([z.string(), z.number(), z.boolean()]),
@@ -31,12 +31,12 @@ bench("zod/mega-stress-test typecheck", () => {
 				data: z.array(z.string()),
 			}),
 		}),
-		children: z
-			.array(z.lazy((): z.ZodType<NodeT> => Node as z.ZodType<NodeT>))
-			.optional(),
-		refs: z
-			.array(z.lazy((): z.ZodType<NodeT> => Node as z.ZodType<NodeT>))
-			.optional(),
+		get children() {
+			return z.array(Node).optional();
+		},
+		get refs() {
+			return z.array(Node).optional();
+		},
 	});
 
 	// Complex discriminated union with heavy nesting
