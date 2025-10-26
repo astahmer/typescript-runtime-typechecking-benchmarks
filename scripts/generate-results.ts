@@ -319,13 +319,13 @@ async function main() {
 		}
 	}
 
-	console.log(`\n📝 Generating RESULTS.md...`);
+	console.log(`\n📝 Generating README.md...`);
 
 	const markdown = generateMarkdown(results);
 
-	writeFileSync("RESULTS.md", markdown, "utf-8");
+	writeFileSync("README.md", markdown, "utf-8");
 
-	console.log("✅ RESULTS.md generated successfully!");
+	console.log("✅ README.md generated successfully!");
 	console.log(`\n📈 Summary:`);
 	console.log(`  - ${results.length} benchmarks processed`);
 	console.log(
