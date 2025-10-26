@@ -1,146 +1,277 @@
 {
-  "cases/arktype/arrays-tuples/case.attest.ts": {
-    "duration": "7s 158ms 316833ns",
-    "ms": 7158.316833
+  "cases": {
+    "arrays-tuples": [
+      {
+        "library": "zod",
+        "ms": 6772.979875,
+        "human": "6s 772ms 979875ns",
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "valibot",
+        "ms": 6780.390084,
+        "human": "6s 780ms 390084ns",
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "arktype",
+        "ms": 7044.622125,
+        "human": "7s 44ms 622125ns",
+        "ratioVsFastest": 1.04
+      },
+      {
+        "library": "effect",
+        "ms": 7090.446333,
+        "human": "7s 90ms 446333ns",
+        "ratioVsFastest": 1.05
+      }
+    ],
+    "mega-stress-test": [
+      {
+        "library": "valibot",
+        "ms": 6932.139416,
+        "human": "6s 932ms 139416ns",
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "zod",
+        "ms": 7320.290792,
+        "human": "7s 320ms 290792ns",
+        "ratioVsFastest": 1.06
+      },
+      {
+        "library": "effect",
+        "ms": 7625.182916,
+        "human": "7s 625ms 182916ns",
+        "ratioVsFastest": 1.1
+      },
+      {
+        "library": "arktype",
+        "ms": 17724.809792,
+        "human": "17s 724ms 809792ns",
+        "ratioVsFastest": 2.56
+      }
+    ],
+    "nested-M": [
+      {
+        "library": "zod",
+        "ms": 6733.016292,
+        "human": "6s 733ms 16292ns",
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "valibot",
+        "ms": 6795.375417,
+        "human": "6s 795ms 375417ns",
+        "ratioVsFastest": 1.01
+      },
+      {
+        "library": "arktype",
+        "ms": 7071.331875,
+        "human": "7s 71ms 331875ns",
+        "ratioVsFastest": 1.05
+      },
+      {
+        "library": "effect",
+        "ms": 7121.672833,
+        "human": "7s 121ms 672833ns",
+        "ratioVsFastest": 1.06
+      }
+    ],
+    "petstore-api": [
+      {
+        "library": "valibot",
+        "ms": 7083.844583,
+        "human": "7s 83ms 844583ns",
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "effect",
+        "ms": 7379.147042,
+        "human": "7s 379ms 147042ns",
+        "ratioVsFastest": 1.04
+      },
+      {
+        "library": "zod",
+        "ms": 8018.417125,
+        "human": "8s 18ms 417125ns",
+        "ratioVsFastest": 1.13
+      },
+      {
+        "library": "arktype",
+        "ms": 9682.811375,
+        "human": "9s 682ms 811375ns",
+        "ratioVsFastest": 1.37
+      }
+    ],
+    "recursive": [
+      {
+        "library": "valibot",
+        "ms": 6803.384042,
+        "human": "6s 803ms 384042ns",
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "arktype",
+        "ms": 6853.095584,
+        "human": "6s 853ms 95584ns",
+        "ratioVsFastest": 1.01
+      },
+      {
+        "library": "zod",
+        "ms": 6866.052875,
+        "human": "6s 866ms 52875ns",
+        "ratioVsFastest": 1.01
+      },
+      {
+        "library": "effect",
+        "ms": 7058.216834,
+        "human": "7s 58ms 216834ns",
+        "ratioVsFastest": 1.04
+      }
+    ],
+    "simple-object-S": [
+      {
+        "library": "valibot",
+        "ms": 6755.788292,
+        "human": "6s 755ms 788292ns",
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "zod",
+        "ms": 6872.640083,
+        "human": "6s 872ms 640083ns",
+        "ratioVsFastest": 1.02
+      },
+      {
+        "library": "arktype",
+        "ms": 6928.138541,
+        "human": "6s 928ms 138541ns",
+        "ratioVsFastest": 1.03
+      },
+      {
+        "library": "effect",
+        "ms": 7080.985292,
+        "human": "7s 80ms 985292ns",
+        "ratioVsFastest": 1.05
+      }
+    ],
+    "stress-test": [
+      {
+        "library": "valibot",
+        "ms": 6952.425542,
+        "human": "6s 952ms 425542ns",
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "effect",
+        "ms": 7224.827708,
+        "human": "7s 224ms 827708ns",
+        "ratioVsFastest": 1.04
+      },
+      {
+        "library": "arktype",
+        "ms": 7258.260833,
+        "human": "7s 258ms 260833ns",
+        "ratioVsFastest": 1.04
+      },
+      {
+        "library": "zod",
+        "ms": 8821.4155,
+        "human": "8s 821ms 415500ns",
+        "ratioVsFastest": 1.27
+      }
+    ],
+    "trpc-petstore": [
+      {
+        "library": "valibot",
+        "ms": 7549.103417,
+        "human": "7s 549ms 103417ns",
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "arktype",
+        "ms": 9831.113667,
+        "human": "9s 831ms 113667ns",
+        "ratioVsFastest": 1.3
+      },
+      {
+        "library": "effect",
+        "ms": 10131.566291,
+        "human": "10s 131ms 566291ns",
+        "ratioVsFastest": 1.34
+      },
+      {
+        "library": "zod",
+        "ms": 11041.226959,
+        "human": "11s 41ms 226959ns",
+        "ratioVsFastest": 1.46
+      }
+    ],
+    "unions-intersections": [
+      {
+        "library": "valibot",
+        "ms": 6761.829792,
+        "human": "6s 761ms 829792ns",
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "arktype",
+        "ms": 6900.5275,
+        "human": "6s 900ms 527500ns",
+        "ratioVsFastest": 1.02
+      },
+      {
+        "library": "zod",
+        "ms": 6925.164167,
+        "human": "6s 925ms 164167ns",
+        "ratioVsFastest": 1.02
+      },
+      {
+        "library": "effect",
+        "ms": 7113.061958,
+        "human": "7s 113ms 61958ns",
+        "ratioVsFastest": 1.05
+      }
+    ]
   },
-  "cases/arktype/nested-M/case.attest.ts": {
-    "duration": "6s 969ms 705042ns",
-    "ms": 6969.705042
+  "total": {
+    "perLibrary": [
+      {
+        "library": "valibot",
+        "totalMs": 62414.280584999986,
+        "totalHuman": "62.41 s",
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "effect",
+        "totalMs": 67825.107207,
+        "totalHuman": "67.83 s",
+        "ratioVsFastest": 1.09
+      },
+      {
+        "library": "zod",
+        "totalMs": 69371.203668,
+        "totalHuman": "69.37 s",
+        "ratioVsFastest": 1.11
+      },
+      {
+        "library": "arktype",
+        "totalMs": 79294.711292,
+        "totalHuman": "79.29 s",
+        "ratioVsFastest": 1.27
+      }
+    ],
+    "ranking": [
+      "valibot",
+      "effect",
+      "zod",
+      "arktype"
+    ]
   },
-  "cases/arktype/mega-stress-test/case.attest.ts": {
-    "duration": "17s 106ms 177916ns",
-    "ms": 17106.177916
-  },
-  "cases/arktype/recursive/case.attest.ts": {
-    "duration": "8s 191ms 417750ns",
-    "ms": 8191.41775
-  },
-  "cases/arktype/petstore-api/case.attest.ts": {
-    "duration": "9s 329ms 426041ns",
-    "ms": 9329.426041
-  },
-  "cases/arktype/simple-object-S/case.attest.ts": {
-    "duration": "6s 905ms 826375ns",
-    "ms": 6905.826375
-  },
-  "cases/arktype/stress-test/case.attest.ts": {
-    "duration": "7s 579ms 443750ns",
-    "ms": 7579.44375
-  },
-  "cases/arktype/trpc-petstore/case.attest.ts": {
-    "duration": "9s 961ms 261000ns",
-    "ms": 9961.261
-  },
-  "cases/arktype/unions-intersections/case.attest.ts": {
-    "duration": "7s 115ms 267625ns",
-    "ms": 7115.267625
-  },
-  "cases/effect/arrays-tuples/case.attest.ts": {
-    "duration": "7s 409ms 413042ns",
-    "ms": 7409.413042
-  },
-  "cases/effect/mega-stress-test/case.attest.ts": {
-    "duration": "8s 141ms 13542ns",
-    "ms": 8141.013542
-  },
-  "cases/effect/nested-M/case.attest.ts": {
-    "duration": "7s 556ms 174958ns",
-    "ms": 7556.174958
-  },
-  "cases/effect/petstore-api/case.attest.ts": {
-    "duration": "8s 243ms 655666ns",
-    "ms": 8243.655666
-  },
-  "cases/effect/recursive/case.attest.ts": {
-    "duration": "7s 231ms 451000ns",
-    "ms": 7231.451
-  },
-  "cases/effect/simple-object-S/case.attest.ts": {
-    "duration": "7s 458ms 913667ns",
-    "ms": 7458.913667
-  },
-  "cases/effect/stress-test/case.attest.ts": {
-    "duration": "7s 868ms 505416ns",
-    "ms": 7868.505416
-  },
-  "cases/effect/trpc-petstore/case.attest.ts": {
-    "duration": "10s 713ms 390375ns",
-    "ms": 10713.390375
-  },
-  "cases/effect/unions-intersections/case.attest.ts": {
-    "duration": "7s 335ms 34917ns",
-    "ms": 7335.034917
-  },
-  "cases/valibot/arrays-tuples/case.attest.ts": {
-    "duration": "6s 826ms 420000ns",
-    "ms": 6826.42
-  },
-  "cases/valibot/nested-M/case.attest.ts": {
-    "duration": "6s 891ms 403541ns",
-    "ms": 6891.403541
-  },
-  "cases/valibot/mega-stress-test/case.attest.ts": {
-    "duration": "6s 959ms 700833ns",
-    "ms": 6959.700833
-  },
-  "cases/valibot/petstore-api/case.attest.ts": {
-    "duration": "7s 265ms 73500ns",
-    "ms": 7265.0735
-  },
-  "cases/valibot/simple-object-S/case.attest.ts": {
-    "duration": "6s 801ms 433916ns",
-    "ms": 6801.433916
-  },
-  "cases/valibot/stress-test/case.attest.ts": {
-    "duration": "7s 154ms 996542ns",
-    "ms": 7154.996542
-  },
-  "cases/valibot/recursive/case.attest.ts": {
-    "duration": "6s 849ms 521583ns",
-    "ms": 6849.521583
-  },
-  "cases/valibot/trpc-petstore/case.attest.ts": {
-    "duration": "7s 560ms 138792ns",
-    "ms": 7560.138792
-  },
-  "cases/valibot/unions-intersections/case.attest.ts": {
-    "duration": "6s 800ms 44750ns",
-    "ms": 6800.04475
-  },
-  "cases/zod/arrays-tuples/case.attest.ts": {
-    "duration": "6s 898ms 585792ns",
-    "ms": 6898.585792
-  },
-  "cases/zod/mega-stress-test/case.attest.ts": {
-    "duration": "8s 29ms 653958ns",
-    "ms": 8029.653958
-  },
-  "cases/zod/nested-M/case.attest.ts": {
-    "duration": "6s 810ms 407208ns",
-    "ms": 6810.407208
-  },
-  "cases/zod/petstore-api/case.attest.ts": {
-    "duration": "8s 9ms 366791ns",
-    "ms": 8009.366791
-  },
-  "cases/zod/simple-object-S/case.attest.ts": {
-    "duration": "6s 732ms 591708ns",
-    "ms": 6732.591708
-  },
-  "cases/zod/recursive/case.attest.ts": {
-    "duration": "6s 764ms 675083ns",
-    "ms": 6764.675083
-  },
-  "cases/zod/stress-test/case.attest.ts": {
-    "duration": "7s 481ms 668917ns",
-    "ms": 7481.668917
-  },
-  "cases/zod/trpc-petstore/case.attest.ts": {
-    "duration": "10s 967ms 665709ns",
-    "ms": 10967.665709
-  },
-  "cases/zod/unions-intersections/case.attest.ts": {
-    "duration": "6s 858ms 857083ns",
-    "ms": 6858.857083
+  "meta": {
+    "generatedAt": "2025-10-25T10:25:36.811Z",
+    "files": 36,
+    "node": "v24.3.0"
   }
 }

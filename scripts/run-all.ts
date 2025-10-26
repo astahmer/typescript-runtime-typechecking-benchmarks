@@ -30,21 +30,83 @@ async function run() {
 					),
 				),
 			);
-			// Write per-file duration results to a JSON map at the repo root
-			const map = Object.fromEntries(
-				results.map(({ duration, file }) => [
-					relative(root, file),
-					{
-						duration: Duration.format(duration),
-						ms: Duration.toMillis(duration),
-					},
-				]),
-			);
+			// Build rich, pretty, and machine-usable JSON output
+			const parsed = results.map(({ duration, file }) => {
+				const rel = relative(root, file);
+				const parts = rel.split("/");
+				const library = parts[1];
+				const testCase = parts[2];
+				const ms = Duration.toMillis(duration);
+				const human = Duration.format(duration);
+				return { rel, library, testCase, ms, human };
+			});
+
+			// Group by case and sort libraries by ascending time
+			const cases: Record<
+				string,
+				Array<{
+					library: string;
+					ms: number;
+					human: string;
+					ratioVsFastest: number;
+				}>
+			> = {};
+			for (const p of parsed) {
+				(cases[p.testCase] ||= []).push({
+					library: p.library,
+					ms: p.ms,
+					human: p.human,
+					ratioVsFastest: 0,
+				});
+			}
+			for (const key of Object.keys(cases)) {
+				cases[key].sort((a, b) => a.ms - b.ms);
+				const fastestMs = cases[key][0]?.ms ?? 1;
+				cases[key] = cases[key].map((x) => ({
+					...x,
+					ratioVsFastest: Number((x.ms / fastestMs).toFixed(2)),
+				}));
+			}
+
+			// Totals per library across all cases
+			const totalsMap = new Map<string, number>();
+			for (const p of parsed) {
+				totalsMap.set(p.library, (totalsMap.get(p.library) || 0) + p.ms);
+			}
+			const perLibrary = Array.from(totalsMap.entries())
+				.map(([library, totalMs]) => ({
+					library,
+					totalMs,
+					totalHuman:
+						totalMs >= 1000
+							? `${(totalMs / 1000).toFixed(2)} s`
+							: `${totalMs.toFixed(2)} ms`,
+				}))
+				.sort((a, b) => a.totalMs - b.totalMs);
+			const fastestTotal = perLibrary[0]?.totalMs ?? 1;
+			const total = {
+				perLibrary: perLibrary.map((x) => ({
+					...x,
+					ratioVsFastest: Number((x.totalMs / fastestTotal).toFixed(2)),
+				})),
+				ranking: perLibrary.map((x) => x.library),
+			};
+
+			const output = {
+				cases,
+				total,
+				meta: {
+					generatedAt: new Date().toISOString(),
+					files: results.length,
+					node: process.version,
+				},
+			};
+
 			const outPath = `${root}/run-results.json`;
 			yield* Effect.tryPromise(() =>
-				writeFile(outPath, JSON.stringify(map, null, 2) + "\n", "utf8"),
+				writeFile(outPath, JSON.stringify(output, null, 2) + "\n", "utf8"),
 			);
-			console.log(`\n📝 Wrote per-file durations to ${outPath}`);
+			console.log(`\n📝 Wrote case rankings and totals to ${outPath}`);
 		}),
 	);
 
