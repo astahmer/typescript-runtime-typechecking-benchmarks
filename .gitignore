@@ -33,3 +33,4 @@ out/
 
 *.codegen.ts
 lefthook-local.yaml
+.attest

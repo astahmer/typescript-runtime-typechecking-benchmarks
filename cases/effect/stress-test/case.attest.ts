@@ -1,0 +1,154 @@
+import { bench } from "@ark/attest";
+import * as S from "effect/Schema";
+
+bench("effect/stress-test typecheck", () => {
+	const DataItem = S.Struct({
+		a: S.String,
+		b: S.Number,
+		c: S.Literal("x", "y", "z"),
+	});
+
+	const UnionType = S.Union(
+		S.String,
+		S.Number,
+		S.Boolean,
+		S.Array(S.Tuple(S.String, S.Number)),
+	);
+
+	const Big = S.Struct({
+		n0: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n1: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n2: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n3: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n4: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n5: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n6: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n7: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n8: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n9: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n10: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n11: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n12: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n13: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n14: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n15: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n16: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n17: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n18: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n19: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n20: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n21: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n22: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n23: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n24: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n25: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n26: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n27: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n28: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		n29: S.Number.pipe(S.greaterThanOrEqualTo(0)),
+		s0: S.String,
+		s1: S.String,
+		s2: S.String,
+		s3: S.String,
+		s4: S.String,
+		s5: S.String,
+		s6: S.String,
+		s7: S.String,
+		s8: S.String,
+		s9: S.String,
+		s10: S.String,
+		s11: S.String,
+		s12: S.String,
+		s13: S.String,
+		s14: S.String,
+		s15: S.String,
+		s16: S.String,
+		s17: S.String,
+		s18: S.String,
+		s19: S.String,
+		s20: S.String,
+		s21: S.String,
+		s22: S.String,
+		s23: S.String,
+		s24: S.String,
+		s25: S.String,
+		s26: S.String,
+		s27: S.String,
+		s28: S.String,
+		s29: S.String,
+		u0: UnionType,
+		u1: UnionType,
+		u2: UnionType,
+		u3: UnionType,
+		u4: UnionType,
+		u5: UnionType,
+		u6: UnionType,
+		u7: UnionType,
+		u8: UnionType,
+		u9: UnionType,
+		u10: UnionType,
+		u11: UnionType,
+		u12: UnionType,
+		u13: UnionType,
+		u14: UnionType,
+		u15: UnionType,
+		u16: UnionType,
+		u17: UnionType,
+		u18: UnionType,
+		u19: UnionType,
+		nested0: S.Struct({
+			id: S.String,
+			data: S.Array(DataItem),
+			meta: S.Struct({ tags: S.Array(S.String), count: S.Number }),
+		}),
+		nested1: S.Struct({
+			id: S.String,
+			data: S.Array(DataItem),
+			meta: S.Struct({ tags: S.Array(S.String), count: S.Number }),
+		}),
+		nested2: S.Struct({
+			id: S.String,
+			data: S.Array(DataItem),
+			meta: S.Struct({ tags: S.Array(S.String), count: S.Number }),
+		}),
+		nested3: S.Struct({
+			id: S.String,
+			data: S.Array(DataItem),
+			meta: S.Struct({ tags: S.Array(S.String), count: S.Number }),
+		}),
+		nested4: S.Struct({
+			id: S.String,
+			data: S.Array(DataItem),
+			meta: S.Struct({ tags: S.Array(S.String), count: S.Number }),
+		}),
+		nested5: S.Struct({
+			id: S.String,
+			data: S.Array(DataItem),
+			meta: S.Struct({ tags: S.Array(S.String), count: S.Number }),
+		}),
+		nested6: S.Struct({
+			id: S.String,
+			data: S.Array(DataItem),
+			meta: S.Struct({ tags: S.Array(S.String), count: S.Number }),
+		}),
+		nested7: S.Struct({
+			id: S.String,
+			data: S.Array(DataItem),
+			meta: S.Struct({ tags: S.Array(S.String), count: S.Number }),
+		}),
+	});
+
+	type T = S.Schema.Type<typeof Big>;
+
+	type DeepReadonly<T> = T extends (...args: any) => any
+		? T
+		: T extends object
+			? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+			: T;
+
+	type TR = DeepReadonly<T>;
+
+	return {} as TR;
+})
+	.mean([467.61, "us"])
+	.types([24805, "instantiations"]);
