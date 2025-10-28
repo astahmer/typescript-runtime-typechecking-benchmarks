@@ -8,6 +8,8 @@ import fg from "fast-glob";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const NUM_RUNS = process.env.NUM_RUNS ? parseInt(process.env.NUM_RUNS, 10) : 10;
+
 interface DiagnosticsMetrics {
 	files: number;
 	lines: number;
@@ -25,10 +27,32 @@ interface DiagnosticsMetrics {
 	totalTime: number; // in seconds
 }
 
-interface CheckResult {
-	library: string;
-	testCase: string;
-	metrics: DiagnosticsMetrics;
+function calculateStats(values: number[]): {
+	mean: number;
+	median: number;
+	min: number;
+	max: number;
+	stdDev: number;
+} {
+	const sorted = [...values].sort((a, b) => a - b);
+	const mean = values.reduce((a, b) => a + b, 0) / values.length;
+	const median =
+		sorted.length % 2 === 0
+			? (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2
+			: sorted[Math.floor(sorted.length / 2)];
+
+	const variance =
+		values.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) /
+		values.length;
+	const stdDev = Math.sqrt(variance);
+
+	return {
+		mean: Number(mean.toFixed(4)),
+		median: Number(median.toFixed(4)),
+		min: Number(sorted[0].toFixed(4)),
+		max: Number(sorted[sorted.length - 1].toFixed(4)),
+		stdDev: Number(stdDev.toFixed(4)),
+	};
 }
 
 function parseMetric(line: string, key: string): number | null {
@@ -136,8 +160,8 @@ async function runCheck() {
 			const results = yield* Effect.all(
 				entries.map((configFile) =>
 					Effect.tryPromise(() =>
-						runTypeCheck(configFile).then((metrics) => ({
-							metrics,
+						runTypeCheckMultiple(configFile, NUM_RUNS).then((result) => ({
+							...result,
 							configFile,
 						})),
 					).pipe(
@@ -154,20 +178,30 @@ async function runCheck() {
 			);
 
 			// Parse results
-			const parsed = validResults.map(({ metrics, configFile }) => {
-				const rel = relative(root, configFile);
-				const parts = rel.split("/");
-				const library = parts[1];
-				const testCase = parts[2];
-				return { rel, library, testCase, metrics };
-			});
+			const parsed = validResults.map(
+				({ metrics, configFile, checkTimeStats, runs }) => {
+					const rel = relative(root, configFile);
+					const parts = rel.split("/");
+					const library = parts[1];
+					const testCase = parts[2];
+					return { rel, library, testCase, metrics, checkTimeStats, runs };
+				},
+			);
 
-			// Group by case and sort libraries by ascending checkTime
+			// Group by case and sort libraries by ascending checkTime (using mean)
 			const cases: Record<
 				string,
 				Array<{
 					library: string;
 					checkTime: number;
+					checkTimeStats: {
+						mean: number;
+						median: number;
+						min: number;
+						max: number;
+						stdDev: number;
+					};
+					runs: number;
 					totalTime: number;
 					memoryUsed: number;
 					files: number;
@@ -180,7 +214,9 @@ async function runCheck() {
 			for (const p of parsed) {
 				(cases[p.testCase] ||= []).push({
 					library: p.library,
-					checkTime: p.metrics.checkTime,
+					checkTime: p.checkTimeStats.mean,
+					checkTimeStats: p.checkTimeStats,
+					runs: p.runs,
 					totalTime: p.metrics.totalTime,
 					memoryUsed: p.metrics.memoryUsed,
 					files: p.metrics.files,
@@ -223,7 +259,7 @@ async function runCheck() {
 					instantiationCount: 0,
 				};
 				totalsMap.set(p.library, {
-					checkTime: current.checkTime + p.metrics.checkTime,
+					checkTime: current.checkTime + p.checkTimeStats.mean,
 					totalTime: current.totalTime + p.metrics.totalTime,
 					memoryUsed: current.memoryUsed + p.metrics.memoryUsed,
 					fileCount: current.fileCount + p.metrics.files,
@@ -259,6 +295,7 @@ async function runCheck() {
 				meta: {
 					generatedAt: new Date().toISOString(),
 					files: validResults.length,
+					runsPerCase: NUM_RUNS,
 					typescript: process.version,
 				},
 			};
@@ -273,7 +310,6 @@ async function runCheck() {
 
 	async function runTypeCheck(configFile: string): Promise<DiagnosticsMetrics> {
 		const rel = relative(root, configFile);
-		console.log(`\n▶ Type-checking ${rel}`);
 
 		const output = await new Promise<string>((resolve, reject) => {
 			let stdout = "";
@@ -312,12 +348,56 @@ async function runCheck() {
 			throw new Error(`Failed to parse diagnostics output for ${rel}`);
 		}
 
-		console.log(`   ✓ Check time: ${metrics.checkTime.toFixed(3)}s`);
+		return metrics;
+	}
+
+	async function runTypeCheckMultiple(
+		configFile: string,
+		numRuns: number,
+	): Promise<{
+		metrics: DiagnosticsMetrics;
+		checkTimeStats: {
+			mean: number;
+			median: number;
+			min: number;
+			max: number;
+			stdDev: number;
+		};
+		runs: number;
+	}> {
+		const rel = relative(root, configFile);
+		console.log(`\n▶ Type-checking ${rel} (${numRuns} runs)`);
+
+		const checkTimes: number[] = [];
+		let firstMetrics: DiagnosticsMetrics | null = null;
+
+		for (let i = 1; i <= numRuns; i++) {
+			const metrics = await runTypeCheck(configFile);
+
+			if (!firstMetrics) {
+				firstMetrics = metrics;
+			}
+
+			checkTimes.push(metrics.checkTime);
+			process.stdout.write(
+				`   ✓ Run ${i}/${numRuns}: Check time ${metrics.checkTime.toFixed(3)}s\n`,
+			);
+		}
+
+		const checkTimeStats = calculateStats(checkTimes);
+
 		console.log(
-			`   ✓ Metrics: Instantiations=${metrics.instantiations}, Types=${metrics.types}, MemoryUsed=${metrics.memoryUsed}K, Files imported=${metrics.files}, `,
+			`   ✅ Mean: ${checkTimeStats.mean.toFixed(3)}s | Median: ${checkTimeStats.median.toFixed(3)}s | StdDev: ${checkTimeStats.stdDev.toFixed(4)}`,
+		);
+		console.log(
+			`   ✓ Metrics: Instantiations=${firstMetrics!.instantiations}, Types=${firstMetrics!.types}, Files=${firstMetrics!.files}`,
 		);
 
-		return metrics;
+		return {
+			metrics: firstMetrics!,
+			checkTimeStats,
+			runs: numRuns,
+		};
 	}
 
 	console.log("\n✅ All type-checks completed");
