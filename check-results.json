@@ -1,0 +1,433 @@
+{
+  "cases": {
+    "arrays-tuples": [
+      {
+        "library": "zod",
+        "checkTime": 0.03,
+        "totalTime": 0.28,
+        "memoryUsed": 87613,
+        "files": 240,
+        "types": 806,
+        "instantiations": 677,
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "valibot",
+        "checkTime": 0.08,
+        "totalTime": 0.34,
+        "memoryUsed": 120306,
+        "files": 169,
+        "types": 4248,
+        "instantiations": 7743,
+        "ratioVsFastest": 2.67
+      },
+      {
+        "library": "effect",
+        "checkTime": 0.08,
+        "totalTime": 0.56,
+        "memoryUsed": 176165,
+        "files": 421,
+        "types": 3629,
+        "instantiations": 6286,
+        "ratioVsFastest": 2.67
+      },
+      {
+        "library": "arktype",
+        "checkTime": 0.11,
+        "totalTime": 0.4,
+        "memoryUsed": 102126,
+        "files": 305,
+        "types": 4177,
+        "instantiations": 10263,
+        "ratioVsFastest": 3.67
+      }
+    ],
+    "mega-stress-test": [
+      {
+        "library": "zod",
+        "checkTime": 0.06,
+        "totalTime": 0.3,
+        "memoryUsed": 106465,
+        "files": 240,
+        "types": 2992,
+        "instantiations": 4187,
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "valibot",
+        "checkTime": 0.16,
+        "totalTime": 0.55,
+        "memoryUsed": 93688,
+        "files": 169,
+        "types": 5791,
+        "instantiations": 15054,
+        "ratioVsFastest": 2.67
+      },
+      {
+        "library": "effect",
+        "checkTime": 0.22,
+        "totalTime": 0.62,
+        "memoryUsed": 188195,
+        "files": 421,
+        "types": 10302,
+        "instantiations": 44861,
+        "ratioVsFastest": 3.67
+      },
+      {
+        "library": "arktype",
+        "checkTime": 0.29,
+        "totalTime": 0.56,
+        "memoryUsed": 139610,
+        "files": 305,
+        "types": 12124,
+        "instantiations": 94318,
+        "ratioVsFastest": 4.83
+      }
+    ],
+    "nested-M": [
+      {
+        "library": "zod",
+        "checkTime": 0.04,
+        "totalTime": 0.27,
+        "memoryUsed": 90319,
+        "files": 240,
+        "types": 1229,
+        "instantiations": 1143,
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "valibot",
+        "checkTime": 0.12,
+        "totalTime": 0.37,
+        "memoryUsed": 96612,
+        "files": 169,
+        "types": 5979,
+        "instantiations": 14231,
+        "ratioVsFastest": 3
+      },
+      {
+        "library": "effect",
+        "checkTime": 0.12,
+        "totalTime": 0.54,
+        "memoryUsed": 162360,
+        "files": 421,
+        "types": 4964,
+        "instantiations": 12669,
+        "ratioVsFastest": 3
+      },
+      {
+        "library": "arktype",
+        "checkTime": 0.13,
+        "totalTime": 0.4,
+        "memoryUsed": 124536,
+        "files": 305,
+        "types": 5001,
+        "instantiations": 24207,
+        "ratioVsFastest": 3.25
+      }
+    ],
+    "recursive": [
+      {
+        "library": "zod",
+        "checkTime": 0.03,
+        "totalTime": 0.26,
+        "memoryUsed": 85848,
+        "files": 240,
+        "types": 506,
+        "instantiations": 438,
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "effect",
+        "checkTime": 0.06,
+        "totalTime": 0.48,
+        "memoryUsed": 172221,
+        "files": 421,
+        "types": 3241,
+        "instantiations": 4498,
+        "ratioVsFastest": 2
+      },
+      {
+        "library": "valibot",
+        "checkTime": 0.07,
+        "totalTime": 0.33,
+        "memoryUsed": 120330,
+        "files": 169,
+        "types": 3327,
+        "instantiations": 8981,
+        "ratioVsFastest": 2.33
+      },
+      {
+        "library": "arktype",
+        "checkTime": 0.08,
+        "totalTime": 0.35,
+        "memoryUsed": 132150,
+        "files": 305,
+        "types": 3544,
+        "instantiations": 8036,
+        "ratioVsFastest": 2.67
+      }
+    ],
+    "petstore-api": [
+      {
+        "library": "valibot",
+        "checkTime": 0.01,
+        "totalTime": 0.31,
+        "memoryUsed": 100583,
+        "files": 169,
+        "types": 86,
+        "instantiations": 0,
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "zod",
+        "checkTime": 0.08,
+        "totalTime": 0.31,
+        "memoryUsed": 121261,
+        "files": 240,
+        "types": 3788,
+        "instantiations": 5978,
+        "ratioVsFastest": 8
+      },
+      {
+        "library": "effect",
+        "checkTime": 0.09,
+        "totalTime": 0.5,
+        "memoryUsed": 181159,
+        "files": 421,
+        "types": 4204,
+        "instantiations": 8328,
+        "ratioVsFastest": 9
+      },
+      {
+        "library": "arktype",
+        "checkTime": 0.29,
+        "totalTime": 0.57,
+        "memoryUsed": 134974,
+        "files": 305,
+        "types": 11162,
+        "instantiations": 136462,
+        "ratioVsFastest": 29
+      }
+    ],
+    "simple-object-S": [
+      {
+        "library": "zod",
+        "checkTime": 0.03,
+        "totalTime": 0.27,
+        "memoryUsed": 88609,
+        "files": 240,
+        "types": 869,
+        "instantiations": 773,
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "effect",
+        "checkTime": 0.08,
+        "totalTime": 0.53,
+        "memoryUsed": 175220,
+        "files": 421,
+        "types": 3573,
+        "instantiations": 5863,
+        "ratioVsFastest": 2.67
+      },
+      {
+        "library": "valibot",
+        "checkTime": 0.09,
+        "totalTime": 0.48,
+        "memoryUsed": 123987,
+        "files": 169,
+        "types": 4747,
+        "instantiations": 9106,
+        "ratioVsFastest": 3
+      },
+      {
+        "library": "arktype",
+        "checkTime": 0.11,
+        "totalTime": 0.38,
+        "memoryUsed": 102092,
+        "files": 305,
+        "types": 3937,
+        "instantiations": 10592,
+        "ratioVsFastest": 3.67
+      }
+    ],
+    "stress-test": [
+      {
+        "library": "zod",
+        "checkTime": 0.07,
+        "totalTime": 0.31,
+        "memoryUsed": 97709,
+        "files": 240,
+        "types": 1905,
+        "instantiations": 3638,
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "valibot",
+        "checkTime": 0.16,
+        "totalTime": 0.42,
+        "memoryUsed": 123669,
+        "files": 169,
+        "types": 6045,
+        "instantiations": 24907,
+        "ratioVsFastest": 2.29
+      },
+      {
+        "library": "arktype",
+        "checkTime": 0.17,
+        "totalTime": 0.45,
+        "memoryUsed": 117101,
+        "files": 305,
+        "types": 6103,
+        "instantiations": 46014,
+        "ratioVsFastest": 2.43
+      },
+      {
+        "library": "effect",
+        "checkTime": 0.19,
+        "totalTime": 0.6,
+        "memoryUsed": 163280,
+        "files": 421,
+        "types": 6332,
+        "instantiations": 24790,
+        "ratioVsFastest": 2.71
+      }
+    ],
+    "trpc-petstore": [
+      {
+        "library": "valibot",
+        "checkTime": 0.01,
+        "totalTime": 0.26,
+        "memoryUsed": 99202,
+        "files": 173,
+        "types": 86,
+        "instantiations": 0,
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "effect",
+        "checkTime": 0.02,
+        "totalTime": 0.43,
+        "memoryUsed": 170513,
+        "files": 425,
+        "types": 488,
+        "instantiations": 216,
+        "ratioVsFastest": 2
+      },
+      {
+        "library": "zod",
+        "checkTime": 0.17,
+        "totalTime": 0.39,
+        "memoryUsed": 126542,
+        "files": 244,
+        "types": 8293,
+        "instantiations": 37508,
+        "ratioVsFastest": 17
+      },
+      {
+        "library": "arktype",
+        "checkTime": 0.44,
+        "totalTime": 0.71,
+        "memoryUsed": 177602,
+        "files": 309,
+        "types": 17097,
+        "instantiations": 224437,
+        "ratioVsFastest": 44
+      }
+    ],
+    "unions-intersections": [
+      {
+        "library": "zod",
+        "checkTime": 0.04,
+        "totalTime": 0.28,
+        "memoryUsed": 91450,
+        "files": 240,
+        "types": 1440,
+        "instantiations": 1852,
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "valibot",
+        "checkTime": 0.1,
+        "totalTime": 0.34,
+        "memoryUsed": 128785,
+        "files": 169,
+        "types": 5223,
+        "instantiations": 11420,
+        "ratioVsFastest": 2.5
+      },
+      {
+        "library": "effect",
+        "checkTime": 0.11,
+        "totalTime": 0.51,
+        "memoryUsed": 157841,
+        "files": 421,
+        "types": 4850,
+        "instantiations": 12121,
+        "ratioVsFastest": 2.75
+      },
+      {
+        "library": "arktype",
+        "checkTime": 0.15,
+        "totalTime": 0.43,
+        "memoryUsed": 127740,
+        "files": 305,
+        "types": 5281,
+        "instantiations": 26375,
+        "ratioVsFastest": 3.75
+      }
+    ]
+  },
+  "total": {
+    "perLibrary": [
+      {
+        "library": "zod",
+        "checkTime": 0.55,
+        "totalTime": 2.67,
+        "fileCount": 2164,
+        "typeCount": 21828,
+        "instantiationCount": 56194,
+        "ratioVsFastest": 1
+      },
+      {
+        "library": "valibot",
+        "checkTime": 0.8,
+        "totalTime": 3.4000000000000004,
+        "fileCount": 1525,
+        "typeCount": 35532,
+        "instantiationCount": 91442,
+        "ratioVsFastest": 1.45
+      },
+      {
+        "library": "effect",
+        "checkTime": 0.9700000000000001,
+        "totalTime": 4.7700000000000005,
+        "fileCount": 3793,
+        "typeCount": 41583,
+        "instantiationCount": 119632,
+        "ratioVsFastest": 1.76
+      },
+      {
+        "library": "arktype",
+        "checkTime": 1.7699999999999998,
+        "totalTime": 4.25,
+        "fileCount": 2749,
+        "typeCount": 68426,
+        "instantiationCount": 580704,
+        "ratioVsFastest": 3.22
+      }
+    ],
+    "ranking": [
+      "zod",
+      "valibot",
+      "effect",
+      "arktype"
+    ]
+  },
+  "meta": {
+    "generatedAt": "2025-10-28T08:53:33.789Z",
+    "files": 36,
+    "typescript": "v24.3.0"
+  }
+}
