@@ -226,14 +226,15 @@ async function runCheck() {
 				});
 			}
 
-			// Calculate ratios against fastest checkTime
+			// Calculate ratios against fastest checkTime and sort alphabetically to get a deterministic output
 			for (const key of Object.keys(cases)) {
-				cases[key].sort((a, b) => a.checkTime - b.checkTime);
-				const fastestCheckTime = cases[key][0]?.checkTime ?? 1;
-				cases[key] = cases[key].map((x) => ({
-					...x,
-					ratioVsFastest: Number((x.checkTime / fastestCheckTime).toFixed(2)),
-				}));
+				const fastest = Math.min(...cases[key].map((x) => x.checkTime));
+				cases[key] = cases[key]
+					.map((x) => ({
+						...x,
+						ratioVsFastest: Number((x.checkTime / fastest).toFixed(2)),
+					}))
+					.sort((a, b) => a.library.localeCompare(b.library));
 			}
 
 			// Totals per library across all cases (ranked by checkTime)
@@ -269,7 +270,7 @@ async function runCheck() {
 				});
 			}
 
-			const perLibrary = Array.from(totalsMap.entries())
+			const perLibrarySorted = Array.from(totalsMap.entries())
 				.map(([library, totals]) => ({
 					library,
 					checkTime: totals.checkTime,
@@ -280,13 +281,30 @@ async function runCheck() {
 				}))
 				.sort((a, b) => a.checkTime - b.checkTime);
 
-			const fastestCheckTime = perLibrary[0]?.checkTime ?? 1;
-			const total = {
-				perLibrary: perLibrary.map((x) => ({
+			const fastestCheckTime = perLibrarySorted[0]?.checkTime ?? 1;
+
+			// perLibrary is sorted alphabetically for consistent diffs
+			const perLibrary = Array.from(totalsMap.entries())
+				.map(([library, totals]) => ({
+					library,
+					checkTime: totals.checkTime,
+					totalTime: totals.totalTime,
+					fileCount: totals.fileCount,
+					typeCount: totals.typeCount,
+					instantiationCount: totals.instantiationCount,
+				}))
+				.sort((a, b) => a.library.localeCompare(b.library))
+				.map((x) => ({
 					...x,
 					ratioVsFastest: Number((x.checkTime / fastestCheckTime).toFixed(2)),
-				})),
-				ranking: perLibrary.map((x) => x.library),
+				}));
+
+			// ranking is sorted by performance
+			const ranking = perLibrarySorted.map((x) => x.library);
+
+			const total = {
+				perLibrary,
+				ranking,
 			};
 
 			const output = {
