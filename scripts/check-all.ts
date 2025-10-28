@@ -188,7 +188,7 @@ async function runCheck() {
 				},
 			);
 
-			// Group by case and sort libraries by ascending checkTime (using mean)
+			// Group by case and sort libraries by ascending checkTime (using median)
 			const cases: Record<
 				string,
 				Array<{
@@ -214,7 +214,7 @@ async function runCheck() {
 			for (const p of parsed) {
 				(cases[p.testCase] ||= []).push({
 					library: p.library,
-					checkTime: p.checkTimeStats.mean,
+					checkTime: p.checkTimeStats.median,
 					checkTimeStats: p.checkTimeStats,
 					runs: p.runs,
 					totalTime: p.metrics.totalTime,
@@ -259,7 +259,7 @@ async function runCheck() {
 					instantiationCount: 0,
 				};
 				totalsMap.set(p.library, {
-					checkTime: current.checkTime + p.checkTimeStats.mean,
+					checkTime: current.checkTime + p.checkTimeStats.median,
 					totalTime: current.totalTime + p.metrics.totalTime,
 					memoryUsed: current.memoryUsed + p.metrics.memoryUsed,
 					fileCount: current.fileCount + p.metrics.files,
