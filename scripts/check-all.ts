@@ -226,15 +226,13 @@ async function runCheck() {
 				});
 			}
 
-			// Calculate ratios against fastest checkTime and sort alphabetically to get a deterministic output
+			// Calculate ratios against fastest checkTime
 			for (const key of Object.keys(cases)) {
 				const fastest = Math.min(...cases[key].map((x) => x.checkTime));
-				cases[key] = cases[key]
-					.map((x) => ({
-						...x,
-						ratioVsFastest: Number((x.checkTime / fastest).toFixed(2)),
-					}))
-					.sort((a, b) => a.library.localeCompare(b.library));
+				cases[key] = cases[key].map((x) => ({
+					...x,
+					ratioVsFastest: Number((x.checkTime / fastest).toFixed(2)),
+				}));
 			}
 
 			// Totals per library across all cases (ranked by checkTime)
@@ -299,7 +297,7 @@ async function runCheck() {
 					ratioVsFastest: Number((x.checkTime / fastestCheckTime).toFixed(2)),
 				}));
 
-			// ranking is sorted by performance
+			// ranking is sorted by performance (checkTime)
 			const ranking = perLibrarySorted.map((x) => x.library);
 
 			const total = {
@@ -307,8 +305,20 @@ async function runCheck() {
 				ranking,
 			};
 
+			// Ensure deterministic ordering: sort case keys alphabetically and
+			// make sure each case's library array is alphabetically ordered.
+			const sortedCaseKeys = Object.keys(cases).sort((a, b) =>
+				a.localeCompare(b),
+			);
+			const sortedCases: Record<string, (typeof cases)[string]> = {};
+			for (const k of sortedCaseKeys) {
+				sortedCases[k] = cases[k]
+					.slice()
+					.sort((a, b) => a.library.localeCompare(b.library));
+			}
+
 			const output = {
-				cases,
+				cases: sortedCases,
 				total,
 				meta: {
 					generatedAt: new Date().toISOString(),

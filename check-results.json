@@ -1,73 +1,147 @@
 {
   "cases": {
-    "mega-stress-test": [
+    "arrays-tuples": [
       {
         "library": "arktype",
-        "checkTime": 0.29,
+        "checkTime": 0.11,
         "checkTimeStats": {
-          "mean": 0.291,
-          "median": 0.29,
-          "min": 0.27,
-          "max": 0.31,
-          "stdDev": 0.013
+          "mean": 0.11,
+          "median": 0.11,
+          "min": 0.11,
+          "max": 0.11,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.71,
-        "memoryUsed": 140206,
+        "runs": 1,
+        "totalTime": 0.5,
+        "memoryUsed": 102433,
         "files": 305,
-        "types": 12124,
-        "instantiations": 94318,
-        "ratioVsFastest": 4.14
+        "types": 4177,
+        "instantiations": 10263,
+        "ratioVsFastest": 3.67
       },
       {
         "library": "effect",
-        "checkTime": 0.2,
+        "checkTime": 0.07,
         "checkTimeStats": {
-          "mean": 0.205,
-          "median": 0.2,
-          "min": 0.19,
-          "max": 0.23,
-          "stdDev": 0.0102
+          "mean": 0.07,
+          "median": 0.07,
+          "min": 0.07,
+          "max": 0.07,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.58,
-        "memoryUsed": 187727,
+        "runs": 1,
+        "totalTime": 0.54,
+        "memoryUsed": 176192,
         "files": 421,
-        "types": 10302,
-        "instantiations": 44861,
-        "ratioVsFastest": 2.86
+        "types": 3629,
+        "instantiations": 6286,
+        "ratioVsFastest": 2.33
       },
       {
         "library": "valibot",
-        "checkTime": 0.11,
+        "checkTime": 0.07,
         "checkTimeStats": {
-          "mean": 0.112,
-          "median": 0.11,
-          "min": 0.1,
-          "max": 0.13,
-          "stdDev": 0.0087
+          "mean": 0.07,
+          "median": 0.07,
+          "min": 0.07,
+          "max": 0.07,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.35,
-        "memoryUsed": 93537,
+        "runs": 1,
+        "totalTime": 0.3,
+        "memoryUsed": 120570,
+        "files": 169,
+        "types": 4248,
+        "instantiations": 7743,
+        "ratioVsFastest": 2.33
+      },
+      {
+        "library": "zod",
+        "checkTime": 0.03,
+        "checkTimeStats": {
+          "mean": 0.03,
+          "median": 0.03,
+          "min": 0.03,
+          "max": 0.03,
+          "stdDev": 0
+        },
+        "runs": 1,
+        "totalTime": 0.31,
+        "memoryUsed": 87612,
+        "files": 240,
+        "types": 806,
+        "instantiations": 677,
+        "ratioVsFastest": 1
+      }
+    ],
+    "mega-stress-test": [
+      {
+        "library": "arktype",
+        "checkTime": 0.37,
+        "checkTimeStats": {
+          "mean": 0.37,
+          "median": 0.37,
+          "min": 0.37,
+          "max": 0.37,
+          "stdDev": 0
+        },
+        "runs": 1,
+        "totalTime": 0.69,
+        "memoryUsed": 139983,
+        "files": 305,
+        "types": 12124,
+        "instantiations": 94318,
+        "ratioVsFastest": 5.29
+      },
+      {
+        "library": "effect",
+        "checkTime": 0.24,
+        "checkTimeStats": {
+          "mean": 0.24,
+          "median": 0.24,
+          "min": 0.24,
+          "max": 0.24,
+          "stdDev": 0
+        },
+        "runs": 1,
+        "totalTime": 0.68,
+        "memoryUsed": 187651,
+        "files": 421,
+        "types": 10302,
+        "instantiations": 44861,
+        "ratioVsFastest": 3.43
+      },
+      {
+        "library": "valibot",
+        "checkTime": 0.12,
+        "checkTimeStats": {
+          "mean": 0.12,
+          "median": 0.12,
+          "min": 0.12,
+          "max": 0.12,
+          "stdDev": 0
+        },
+        "runs": 1,
+        "totalTime": 0.36,
+        "memoryUsed": 93861,
         "files": 169,
         "types": 5791,
         "instantiations": 15054,
-        "ratioVsFastest": 1.57
+        "ratioVsFastest": 1.71
       },
       {
         "library": "zod",
         "checkTime": 0.07,
         "checkTimeStats": {
-          "mean": 0.079,
+          "mean": 0.07,
           "median": 0.07,
-          "min": 0.06,
-          "max": 0.13,
-          "stdDev": 0.0197
+          "min": 0.07,
+          "max": 0.07,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.35,
-        "memoryUsed": 106572,
+        "runs": 1,
+        "totalTime": 0.37,
+        "memoryUsed": 105183,
         "files": 240,
         "types": 2992,
         "instantiations": 4187,
@@ -77,35 +151,35 @@
     "nested-M": [
       {
         "library": "arktype",
-        "checkTime": 0.14,
+        "checkTime": 0.18,
         "checkTimeStats": {
-          "mean": 0.142,
-          "median": 0.14,
-          "min": 0.13,
-          "max": 0.16,
-          "stdDev": 0.0108
+          "mean": 0.18,
+          "median": 0.18,
+          "min": 0.18,
+          "max": 0.18,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.49,
-        "memoryUsed": 125182,
+        "runs": 1,
+        "totalTime": 0.6,
+        "memoryUsed": 124544,
         "files": 305,
         "types": 5001,
         "instantiations": 24207,
-        "ratioVsFastest": 3.5
+        "ratioVsFastest": 4.5
       },
       {
         "library": "effect",
         "checkTime": 0.11,
         "checkTimeStats": {
-          "mean": 0.116,
+          "mean": 0.11,
           "median": 0.11,
           "min": 0.11,
-          "max": 0.15,
-          "stdDev": 0.012
+          "max": 0.11,
+          "stdDev": 0
         },
-        "runs": 10,
+        "runs": 1,
         "totalTime": 0.5,
-        "memoryUsed": 160921,
+        "memoryUsed": 162353,
         "files": 421,
         "types": 4964,
         "instantiations": 12669,
@@ -115,15 +189,15 @@
         "library": "valibot",
         "checkTime": 0.12,
         "checkTimeStats": {
-          "mean": 0.119,
+          "mean": 0.12,
           "median": 0.12,
-          "min": 0.11,
-          "max": 0.14,
-          "stdDev": 0.0083
+          "min": 0.12,
+          "max": 0.12,
+          "stdDev": 0
         },
-        "runs": 10,
+        "runs": 1,
         "totalTime": 0.35,
-        "memoryUsed": 96243,
+        "memoryUsed": 96458,
         "files": 169,
         "types": 5979,
         "instantiations": 14231,
@@ -139,121 +213,47 @@
           "max": 0.04,
           "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.27,
-        "memoryUsed": 90254,
+        "runs": 1,
+        "totalTime": 0.3,
+        "memoryUsed": 90111,
         "files": 240,
         "types": 1229,
         "instantiations": 1143,
         "ratioVsFastest": 1
       }
     ],
-    "arrays-tuples": [
-      {
-        "library": "arktype",
-        "checkTime": 0.11,
-        "checkTimeStats": {
-          "mean": 0.108,
-          "median": 0.11,
-          "min": 0.1,
-          "max": 0.12,
-          "stdDev": 0.006
-        },
-        "runs": 10,
-        "totalTime": 0.38,
-        "memoryUsed": 102096,
-        "files": 305,
-        "types": 4177,
-        "instantiations": 10263,
-        "ratioVsFastest": 3.67
-      },
-      {
-        "library": "effect",
-        "checkTime": 0.07,
-        "checkTimeStats": {
-          "mean": 0.072,
-          "median": 0.07,
-          "min": 0.07,
-          "max": 0.09,
-          "stdDev": 0.006
-        },
-        "runs": 10,
-        "totalTime": 0.58,
-        "memoryUsed": 176015,
-        "files": 421,
-        "types": 3629,
-        "instantiations": 6286,
-        "ratioVsFastest": 2.33
-      },
-      {
-        "library": "valibot",
-        "checkTime": 0.07,
-        "checkTimeStats": {
-          "mean": 0.073,
-          "median": 0.07,
-          "min": 0.07,
-          "max": 0.08,
-          "stdDev": 0.0046
-        },
-        "runs": 10,
-        "totalTime": 0.31,
-        "memoryUsed": 120757,
-        "files": 169,
-        "types": 4248,
-        "instantiations": 7743,
-        "ratioVsFastest": 2.33
-      },
-      {
-        "library": "zod",
-        "checkTime": 0.03,
-        "checkTimeStats": {
-          "mean": 0.032,
-          "median": 0.03,
-          "min": 0.03,
-          "max": 0.04,
-          "stdDev": 0.004
-        },
-        "runs": 10,
-        "totalTime": 0.3,
-        "memoryUsed": 87628,
-        "files": 240,
-        "types": 806,
-        "instantiations": 677,
-        "ratioVsFastest": 1
-      }
-    ],
     "petstore-api": [
       {
         "library": "arktype",
-        "checkTime": 0.305,
+        "checkTime": 0.35,
         "checkTimeStats": {
-          "mean": 0.314,
-          "median": 0.305,
-          "min": 0.28,
-          "max": 0.43,
-          "stdDev": 0.0398
+          "mean": 0.35,
+          "median": 0.35,
+          "min": 0.35,
+          "max": 0.35,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.58,
-        "memoryUsed": 134286,
+        "runs": 1,
+        "totalTime": 0.65,
+        "memoryUsed": 133502,
         "files": 305,
         "types": 11162,
         "instantiations": 136462,
-        "ratioVsFastest": 30.5
+        "ratioVsFastest": 35
       },
       {
         "library": "effect",
         "checkTime": 0.08,
         "checkTimeStats": {
-          "mean": 0.081,
+          "mean": 0.08,
           "median": 0.08,
           "min": 0.08,
-          "max": 0.09,
-          "stdDev": 0.003
+          "max": 0.08,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.47,
-        "memoryUsed": 179462,
+        "runs": 1,
+        "totalTime": 0.49,
+        "memoryUsed": 180479,
         "files": 421,
         "types": 4204,
         "instantiations": 8328,
@@ -269,9 +269,9 @@
           "max": 0.01,
           "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.26,
-        "memoryUsed": 101001,
+        "runs": 1,
+        "totalTime": 0.24,
+        "memoryUsed": 100941,
         "files": 169,
         "types": 86,
         "instantiations": 0,
@@ -281,75 +281,75 @@
         "library": "zod",
         "checkTime": 0.08,
         "checkTimeStats": {
-          "mean": 0.091,
+          "mean": 0.08,
           "median": 0.08,
-          "min": 0.07,
-          "max": 0.16,
-          "stdDev": 0.0247
+          "min": 0.08,
+          "max": 0.08,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.31,
-        "memoryUsed": 121027,
+        "runs": 1,
+        "totalTime": 0.35,
+        "memoryUsed": 121438,
         "files": 240,
         "types": 3788,
         "instantiations": 5978,
         "ratioVsFastest": 8
       }
     ],
-    "simple-object-S": [
+    "recursive": [
       {
         "library": "arktype",
-        "checkTime": 0.1,
+        "checkTime": 0.09,
         "checkTimeStats": {
-          "mean": 0.099,
-          "median": 0.1,
+          "mean": 0.09,
+          "median": 0.09,
           "min": 0.09,
-          "max": 0.11,
-          "stdDev": 0.0054
+          "max": 0.09,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.36,
-        "memoryUsed": 101982,
+        "runs": 1,
+        "totalTime": 0.43,
+        "memoryUsed": 132178,
         "files": 305,
-        "types": 3937,
-        "instantiations": 10592,
-        "ratioVsFastest": 3.33
+        "types": 3544,
+        "instantiations": 8036,
+        "ratioVsFastest": 3
       },
       {
         "library": "effect",
         "checkTime": 0.07,
         "checkTimeStats": {
-          "mean": 0.073,
+          "mean": 0.07,
           "median": 0.07,
           "min": 0.07,
-          "max": 0.08,
-          "stdDev": 0.0046
+          "max": 0.07,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.47,
-        "memoryUsed": 175181,
+        "runs": 1,
+        "totalTime": 0.46,
+        "memoryUsed": 172448,
         "files": 421,
-        "types": 3573,
-        "instantiations": 5863,
+        "types": 3241,
+        "instantiations": 4498,
         "ratioVsFastest": 2.33
       },
       {
         "library": "valibot",
-        "checkTime": 0.09,
+        "checkTime": 0.07,
         "checkTimeStats": {
-          "mean": 0.094,
-          "median": 0.09,
-          "min": 0.08,
-          "max": 0.11,
-          "stdDev": 0.008
+          "mean": 0.07,
+          "median": 0.07,
+          "min": 0.07,
+          "max": 0.07,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.36,
-        "memoryUsed": 124170,
+        "runs": 1,
+        "totalTime": 0.35,
+        "memoryUsed": 120514,
         "files": 169,
-        "types": 4747,
-        "instantiations": 9106,
-        "ratioVsFastest": 3
+        "types": 3327,
+        "instantiations": 8981,
+        "ratioVsFastest": 2.33
       },
       {
         "library": "zod",
@@ -361,157 +361,157 @@
           "max": 0.03,
           "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.27,
-        "memoryUsed": 87862,
-        "files": 240,
-        "types": 869,
-        "instantiations": 773,
-        "ratioVsFastest": 1
-      }
-    ],
-    "recursive": [
-      {
-        "library": "arktype",
-        "checkTime": 0.08,
-        "checkTimeStats": {
-          "mean": 0.079,
-          "median": 0.08,
-          "min": 0.07,
-          "max": 0.08,
-          "stdDev": 0.003
-        },
-        "runs": 10,
-        "totalTime": 0.36,
-        "memoryUsed": 131862,
-        "files": 305,
-        "types": 3544,
-        "instantiations": 8036,
-        "ratioVsFastest": 2.67
-      },
-      {
-        "library": "effect",
-        "checkTime": 0.06,
-        "checkTimeStats": {
-          "mean": 0.062,
-          "median": 0.06,
-          "min": 0.06,
-          "max": 0.07,
-          "stdDev": 0.004
-        },
-        "runs": 10,
-        "totalTime": 0.45,
-        "memoryUsed": 172357,
-        "files": 421,
-        "types": 3241,
-        "instantiations": 4498,
-        "ratioVsFastest": 2
-      },
-      {
-        "library": "valibot",
-        "checkTime": 0.105,
-        "checkTimeStats": {
-          "mean": 0.114,
-          "median": 0.105,
-          "min": 0.07,
-          "max": 0.2,
-          "stdDev": 0.041
-        },
-        "runs": 10,
-        "totalTime": 0.34,
-        "memoryUsed": 120364,
-        "files": 169,
-        "types": 3327,
-        "instantiations": 8981,
-        "ratioVsFastest": 3.5
-      },
-      {
-        "library": "zod",
-        "checkTime": 0.03,
-        "checkTimeStats": {
-          "mean": 0.029,
-          "median": 0.03,
-          "min": 0.02,
-          "max": 0.03,
-          "stdDev": 0.003
-        },
-        "runs": 10,
-        "totalTime": 0.26,
-        "memoryUsed": 85897,
+        "runs": 1,
+        "totalTime": 0.3,
+        "memoryUsed": 85631,
         "files": 240,
         "types": 506,
         "instantiations": 438,
         "ratioVsFastest": 1
       }
     ],
-    "stress-test": [
+    "simple-object-S": [
       {
         "library": "arktype",
-        "checkTime": 0.16,
+        "checkTime": 0.1,
         "checkTimeStats": {
-          "mean": 0.163,
-          "median": 0.16,
-          "min": 0.16,
-          "max": 0.17,
-          "stdDev": 0.0046
+          "mean": 0.1,
+          "median": 0.1,
+          "min": 0.1,
+          "max": 0.1,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.43,
-        "memoryUsed": 116951,
+        "runs": 1,
+        "totalTime": 0.4,
+        "memoryUsed": 102091,
         "files": 305,
-        "types": 6103,
-        "instantiations": 46014,
-        "ratioVsFastest": 2.67
+        "types": 3937,
+        "instantiations": 10592,
+        "ratioVsFastest": 1.43
       },
       {
         "library": "effect",
-        "checkTime": 0.19,
+        "checkTime": 0.07,
         "checkTimeStats": {
-          "mean": 0.209,
-          "median": 0.19,
-          "min": 0.18,
-          "max": 0.4,
-          "stdDev": 0.0641
+          "mean": 0.07,
+          "median": 0.07,
+          "min": 0.07,
+          "max": 0.07,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.65,
-        "memoryUsed": 163182,
+        "runs": 1,
+        "totalTime": 0.5,
+        "memoryUsed": 175912,
         "files": 421,
-        "types": 6332,
-        "instantiations": 24790,
-        "ratioVsFastest": 3.17
+        "types": 3573,
+        "instantiations": 5863,
+        "ratioVsFastest": 1
       },
       {
         "library": "valibot",
-        "checkTime": 0.165,
+        "checkTime": 0.12,
         "checkTimeStats": {
-          "mean": 0.17,
-          "median": 0.165,
-          "min": 0.15,
-          "max": 0.21,
-          "stdDev": 0.02
+          "mean": 0.12,
+          "median": 0.12,
+          "min": 0.12,
+          "max": 0.12,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.43,
-        "memoryUsed": 123313,
+        "runs": 1,
+        "totalTime": 0.35,
+        "memoryUsed": 124461,
         "files": 169,
-        "types": 6045,
-        "instantiations": 24907,
-        "ratioVsFastest": 2.75
+        "types": 4747,
+        "instantiations": 9106,
+        "ratioVsFastest": 1.71
       },
       {
         "library": "zod",
-        "checkTime": 0.06,
+        "checkTime": 0.12,
         "checkTimeStats": {
-          "mean": 0.061,
-          "median": 0.06,
-          "min": 0.06,
-          "max": 0.07,
-          "stdDev": 0.003
+          "mean": 0.12,
+          "median": 0.12,
+          "min": 0.12,
+          "max": 0.12,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.29,
-        "memoryUsed": 111838,
+        "runs": 1,
+        "totalTime": 0.84,
+        "memoryUsed": 86806,
+        "files": 240,
+        "types": 869,
+        "instantiations": 773,
+        "ratioVsFastest": 1.71
+      }
+    ],
+    "stress-test": [
+      {
+        "library": "arktype",
+        "checkTime": 0.2,
+        "checkTimeStats": {
+          "mean": 0.2,
+          "median": 0.2,
+          "min": 0.2,
+          "max": 0.2,
+          "stdDev": 0
+        },
+        "runs": 1,
+        "totalTime": 0.48,
+        "memoryUsed": 116505,
+        "files": 305,
+        "types": 6103,
+        "instantiations": 46014,
+        "ratioVsFastest": 2.86
+      },
+      {
+        "library": "effect",
+        "checkTime": 0.17,
+        "checkTimeStats": {
+          "mean": 0.17,
+          "median": 0.17,
+          "min": 0.17,
+          "max": 0.17,
+          "stdDev": 0
+        },
+        "runs": 1,
+        "totalTime": 0.58,
+        "memoryUsed": 208696,
+        "files": 421,
+        "types": 6332,
+        "instantiations": 24790,
+        "ratioVsFastest": 2.43
+      },
+      {
+        "library": "valibot",
+        "checkTime": 0.16,
+        "checkTimeStats": {
+          "mean": 0.16,
+          "median": 0.16,
+          "min": 0.16,
+          "max": 0.16,
+          "stdDev": 0
+        },
+        "runs": 1,
+        "totalTime": 0.42,
+        "memoryUsed": 122348,
+        "files": 169,
+        "types": 6045,
+        "instantiations": 24907,
+        "ratioVsFastest": 2.29
+      },
+      {
+        "library": "zod",
+        "checkTime": 0.07,
+        "checkTimeStats": {
+          "mean": 0.07,
+          "median": 0.07,
+          "min": 0.07,
+          "max": 0.07,
+          "stdDev": 0
+        },
+        "runs": 1,
+        "totalTime": 0.66,
+        "memoryUsed": 100636,
         "files": 240,
         "types": 1905,
         "instantiations": 3638,
@@ -521,21 +521,21 @@
     "trpc-petstore": [
       {
         "library": "arktype",
-        "checkTime": 0.42,
+        "checkTime": 0.44,
         "checkTimeStats": {
-          "mean": 0.419,
-          "median": 0.42,
-          "min": 0.4,
-          "max": 0.46,
-          "stdDev": 0.0176
+          "mean": 0.44,
+          "median": 0.44,
+          "min": 0.44,
+          "max": 0.44,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.66,
-        "memoryUsed": 177712,
+        "runs": 1,
+        "totalTime": 0.75,
+        "memoryUsed": 177402,
         "files": 309,
         "types": 17097,
         "instantiations": 224437,
-        "ratioVsFastest": 42
+        "ratioVsFastest": 44
       },
       {
         "library": "effect",
@@ -547,9 +547,9 @@
           "max": 0.02,
           "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.64,
-        "memoryUsed": 170706,
+        "runs": 1,
+        "totalTime": 0.44,
+        "memoryUsed": 170622,
         "files": 425,
         "types": 488,
         "instantiations": 216,
@@ -565,9 +565,9 @@
           "max": 0.01,
           "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.25,
-        "memoryUsed": 98347,
+        "runs": 1,
+        "totalTime": 0.28,
+        "memoryUsed": 99425,
         "files": 173,
         "types": 86,
         "instantiations": 0,
@@ -575,91 +575,91 @@
       },
       {
         "library": "zod",
-        "checkTime": 0.16,
+        "checkTime": 0.17,
         "checkTimeStats": {
-          "mean": 0.164,
-          "median": 0.16,
-          "min": 0.15,
-          "max": 0.18,
-          "stdDev": 0.008
+          "mean": 0.17,
+          "median": 0.17,
+          "min": 0.17,
+          "max": 0.17,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.41,
-        "memoryUsed": 126554,
+        "runs": 1,
+        "totalTime": 0.47,
+        "memoryUsed": 126246,
         "files": 244,
         "types": 8293,
         "instantiations": 37508,
-        "ratioVsFastest": 16
+        "ratioVsFastest": 17
       }
     ],
     "unions-intersections": [
       {
         "library": "arktype",
-        "checkTime": 0.13,
+        "checkTime": 0.14,
         "checkTimeStats": {
-          "mean": 0.13,
-          "median": 0.13,
-          "min": 0.12,
+          "mean": 0.14,
+          "median": 0.14,
+          "min": 0.14,
           "max": 0.14,
-          "stdDev": 0.0077
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.39,
-        "memoryUsed": 127453,
+        "runs": 1,
+        "totalTime": 0.4,
+        "memoryUsed": 126323,
         "files": 305,
         "types": 5281,
         "instantiations": 26375,
-        "ratioVsFastest": 3.25
+        "ratioVsFastest": 3.5
       },
       {
         "library": "effect",
-        "checkTime": 0.12,
+        "checkTime": 0.11,
         "checkTimeStats": {
-          "mean": 0.121,
-          "median": 0.12,
+          "mean": 0.11,
+          "median": 0.11,
           "min": 0.11,
-          "max": 0.14,
-          "stdDev": 0.0094
+          "max": 0.11,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.85,
-        "memoryUsed": 158736,
+        "runs": 1,
+        "totalTime": 0.49,
+        "memoryUsed": 157561,
         "files": 421,
         "types": 4850,
         "instantiations": 12121,
-        "ratioVsFastest": 3
+        "ratioVsFastest": 2.75
       },
       {
         "library": "valibot",
-        "checkTime": 0.09,
+        "checkTime": 0.2,
         "checkTimeStats": {
-          "mean": 0.094,
-          "median": 0.09,
-          "min": 0.08,
-          "max": 0.11,
-          "stdDev": 0.008
+          "mean": 0.2,
+          "median": 0.2,
+          "min": 0.2,
+          "max": 0.2,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.35,
-        "memoryUsed": 128689,
+        "runs": 1,
+        "totalTime": 0.46,
+        "memoryUsed": 128913,
         "files": 169,
         "types": 5223,
         "instantiations": 11420,
-        "ratioVsFastest": 2.25
+        "ratioVsFastest": 5
       },
       {
         "library": "zod",
         "checkTime": 0.04,
         "checkTimeStats": {
-          "mean": 0.044,
+          "mean": 0.04,
           "median": 0.04,
           "min": 0.04,
-          "max": 0.07,
-          "stdDev": 0.0092
+          "max": 0.04,
+          "stdDev": 0
         },
-        "runs": 10,
-        "totalTime": 0.28,
-        "memoryUsed": 91551,
+        "runs": 1,
+        "totalTime": 0.3,
+        "memoryUsed": 92516,
         "files": 240,
         "types": 1440,
         "instantiations": 1852,
@@ -671,35 +671,35 @@
     "perLibrary": [
       {
         "library": "arktype",
-        "checkTime": 1.7349999999999999,
-        "totalTime": 4.36,
+        "checkTime": 1.98,
+        "totalTime": 4.9,
         "fileCount": 2749,
         "typeCount": 68426,
         "instantiationCount": 580704,
-        "ratioVsFastest": 3.21
+        "ratioVsFastest": 3.05
       },
       {
         "library": "effect",
-        "checkTime": 0.92,
-        "totalTime": 5.1899999999999995,
+        "checkTime": 0.9400000000000002,
+        "totalTime": 4.680000000000001,
         "fileCount": 3793,
         "typeCount": 41583,
         "instantiationCount": 119632,
-        "ratioVsFastest": 1.7
+        "ratioVsFastest": 1.45
       },
       {
         "library": "valibot",
-        "checkTime": 0.77,
-        "totalTime": 3,
+        "checkTime": 0.8800000000000001,
+        "totalTime": 3.1099999999999994,
         "fileCount": 1525,
         "typeCount": 35532,
         "instantiationCount": 91442,
-        "ratioVsFastest": 1.43
+        "ratioVsFastest": 1.35
       },
       {
         "library": "zod",
-        "checkTime": 0.54,
-        "totalTime": 2.74,
+        "checkTime": 0.65,
+        "totalTime": 3.9000000000000004,
         "fileCount": 2164,
         "typeCount": 21828,
         "instantiationCount": 56194,
@@ -714,9 +714,9 @@
     ]
   },
   "meta": {
-    "generatedAt": "2025-10-28T09:15:06.290Z",
+    "generatedAt": "2025-10-28T10:35:01.963Z",
     "files": 36,
-    "runsPerCase": 10,
+    "runsPerCase": 1,
     "typescript": "v24.3.0"
   }
 }
