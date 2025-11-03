@@ -10,6 +10,14 @@ const __dirname = dirname(__filename);
 
 const NUM_RUNS = process.env.NUM_RUNS ? parseInt(process.env.NUM_RUNS, 10) : 10;
 
+interface Stats {
+	mean: number;
+	median: number;
+	min: number;
+	max: number;
+	stdDev: number;
+}
+
 interface DiagnosticsMetrics {
 	files: number;
 	lines: number;
@@ -27,13 +35,7 @@ interface DiagnosticsMetrics {
 	totalTime: number; // in seconds
 }
 
-function calculateStats(values: number[]): {
-	mean: number;
-	median: number;
-	min: number;
-	max: number;
-	stdDev: number;
-} {
+function calculateStats(values: number[]): Stats {
 	const sorted = [...values].sort((a, b) => a - b);
 	const mean = values.reduce((a, b) => a + b, 0) / values.length;
 	const median =
@@ -55,68 +57,65 @@ function calculateStats(values: number[]): {
 	};
 }
 
-function parseMetric(line: string, key: string): number | null {
-	const regex = new RegExp(`^${key}:\\s+([\\d.]+)`);
-	const match = line.match(regex);
-	if (match) {
-		const value = parseFloat(match[1]);
-		return isNaN(value) ? null : value;
+function parseMetricValue(
+	line: string,
+	key: string,
+	suffix?: string,
+): number | null {
+	let regex: RegExp;
+	if (suffix) {
+		regex = new RegExp(`^${key}:\\s+([\\d.]+)${suffix}$`);
+	} else {
+		regex = new RegExp(`^${key}:\\s+([\\d.]+)$`);
 	}
-	return null;
+	const match = line.match(regex);
+	return match ? parseFloat(match[1]) : null;
 }
 
 function parseDiagnosticsOutput(output: string): DiagnosticsMetrics | null {
 	const lines = output.split("\n");
 	const metrics: Partial<DiagnosticsMetrics> = {};
 
+	const timeMetrics = {
+		ioRead: "I/O read",
+		ioWrite: "I/O write",
+		parseTime: "Parse time",
+		bindTime: "Bind time",
+		checkTime: "Check time",
+		emitTime: "Emit time",
+		totalTime: "Total time",
+	} as const;
+
+	const intMetrics = {
+		files: "Files",
+		lines: "Lines",
+		identifiers: "Identifiers",
+		symbols: "Symbols",
+		types: "Types",
+		instantiations: "Instantiations",
+	} as const;
+
 	for (const line of lines) {
-		// Handle lines with "K" suffix (memory)
+		// Parse time metrics with "s" suffix
+		for (const [key, label] of Object.entries(timeMetrics)) {
+			const val = parseMetricValue(line, label, "s");
+			if (val !== null) {
+				(metrics as Record<string, number>)[key] = val;
+			}
+		}
+
+		// Parse integer metrics
+		for (const [key, label] of Object.entries(intMetrics)) {
+			const val = parseMetricValue(line, label);
+			if (val !== null) {
+				(metrics as Record<string, number>)[key] = val;
+			}
+		}
+
+		// Parse memory metric with "K" suffix
 		if (line.startsWith("Memory used:")) {
 			const match = line.match(/Memory used:\s+(\d+)K/);
 			if (match) metrics.memoryUsed = parseInt(match[1], 10);
-		}
-		// Handle time metrics with "s" suffix
-		else if (line.startsWith("I/O read:")) {
-			const match = line.match(/I\/O read:\s+([\d.]+)s/);
-			if (match) metrics.ioRead = parseFloat(match[1]);
-		} else if (line.startsWith("I/O write:")) {
-			const match = line.match(/I\/O write:\s+([\d.]+)s/);
-			if (match) metrics.ioWrite = parseFloat(match[1]);
-		} else if (line.startsWith("Parse time:")) {
-			const match = line.match(/Parse time:\s+([\d.]+)s/);
-			if (match) metrics.parseTime = parseFloat(match[1]);
-		} else if (line.startsWith("Bind time:")) {
-			const match = line.match(/Bind time:\s+([\d.]+)s/);
-			if (match) metrics.bindTime = parseFloat(match[1]);
-		} else if (line.startsWith("Check time:")) {
-			const match = line.match(/Check time:\s+([\d.]+)s/);
-			if (match) metrics.checkTime = parseFloat(match[1]);
-		} else if (line.startsWith("Emit time:")) {
-			const match = line.match(/Emit time:\s+([\d.]+)s/);
-			if (match) metrics.emitTime = parseFloat(match[1]);
-		} else if (line.startsWith("Total time:")) {
-			const match = line.match(/Total time:\s+([\d.]+)s/);
-			if (match) metrics.totalTime = parseFloat(match[1]);
-		}
-		// Handle simple integer metrics
-		else {
-			const filesVal = parseMetric(line, "Files");
-			if (filesVal !== null) metrics.files = filesVal;
-
-			const linesVal = parseMetric(line, "Lines");
-			if (linesVal !== null) metrics.lines = linesVal;
-
-			const identsVal = parseMetric(line, "Identifiers");
-			if (identsVal !== null) metrics.identifiers = identsVal;
-
-			const symbolsVal = parseMetric(line, "Symbols");
-			if (symbolsVal !== null) metrics.symbols = symbolsVal;
-
-			const typesVal = parseMetric(line, "Types");
-			if (typesVal !== null) metrics.types = typesVal;
-
-			const instantVal = parseMetric(line, "Instantiations");
-			if (instantVal !== null) metrics.instantiations = instantVal;
 		}
 	}
 
@@ -141,6 +140,32 @@ function parseDiagnosticsOutput(output: string): DiagnosticsMetrics | null {
 	}
 
 	return null;
+}
+
+interface CaseResult {
+	library: string;
+	meanCheckTime: number;
+	medianCheckTime: number;
+	checkTimeStats: Stats;
+	runs: number;
+	totalTime: number;
+	memoryUsed: number;
+	files: number;
+	types: number;
+	instantiations: number;
+	ratioVsFastest: number;
+}
+
+interface LibraryTotal {
+	library: string;
+	meanCheckTime: number;
+	medianCheckTime: number;
+	totalTime: number;
+	memoryUsed: number;
+	fileCount: number;
+	typeCount: number;
+	instantiationCount: number;
+	ratioVsFastest?: number;
 }
 
 async function runCheck() {
@@ -189,31 +214,12 @@ async function runCheck() {
 			);
 
 			// Group by case and sort libraries by ascending checkTime (using median)
-			const cases: Record<
-				string,
-				Array<{
-					library: string;
-					medianCheckTime: number;
-					checkTimeStats: {
-						mean: number;
-						median: number;
-						min: number;
-						max: number;
-						stdDev: number;
-					};
-					runs: number;
-					totalTime: number;
-					memoryUsed: number;
-					files: number;
-					types: number;
-					instantiations: number;
-					ratioVsFastest: number;
-				}>
-			> = {};
+			const cases: Record<string, CaseResult[]> = {};
 
 			for (const p of parsed) {
 				(cases[p.testCase] ||= []).push({
 					library: p.library,
+					meanCheckTime: p.checkTimeStats.mean,
 					medianCheckTime: p.checkTimeStats.median,
 					checkTimeStats: p.checkTimeStats,
 					runs: p.runs,
@@ -226,7 +232,7 @@ async function runCheck() {
 				});
 			}
 
-			// Calculate ratios against fastest checkTime
+			// Calculate ratios against fastest checkTime (using median)
 			for (const key of Object.keys(cases)) {
 				const fastest = Math.min(...cases[key].map((x) => x.medianCheckTime));
 				cases[key] = cases[key].map((x) => ({
@@ -236,20 +242,12 @@ async function runCheck() {
 			}
 
 			// Totals per library across all cases (ranked by checkTime)
-			const totalsMap = new Map<
-				string,
-				{
-					medianCheckTime: number;
-					totalTime: number;
-					memoryUsed: number;
-					fileCount: number;
-					typeCount: number;
-					instantiationCount: number;
-				}
-			>();
+			const totalsMap = new Map<string, LibraryTotal>();
 
 			for (const p of parsed) {
 				const current = totalsMap.get(p.library) || {
+					library: p.library,
+					meanCheckTime: 0,
 					medianCheckTime: 0,
 					totalTime: 0,
 					memoryUsed: 0,
@@ -258,6 +256,8 @@ async function runCheck() {
 					instantiationCount: 0,
 				};
 				totalsMap.set(p.library, {
+					...current,
+					meanCheckTime: current.meanCheckTime + p.checkTimeStats.mean,
 					medianCheckTime: current.medianCheckTime + p.checkTimeStats.median,
 					totalTime: current.totalTime + p.metrics.totalTime,
 					memoryUsed: current.memoryUsed + p.metrics.memoryUsed,
@@ -268,29 +268,14 @@ async function runCheck() {
 				});
 			}
 
-			const perLibrarySorted = Array.from(totalsMap.entries())
-				.map(([library, totals]) => ({
-					library,
-					medianCheckTime: totals.medianCheckTime,
-					totalTime: totals.totalTime,
-					fileCount: totals.fileCount,
-					typeCount: totals.typeCount,
-					instantiationCount: totals.instantiationCount,
-				}))
-				.sort((a, b) => a.medianCheckTime - b.medianCheckTime);
+			const perLibrarySorted = Array.from(totalsMap.values()).sort(
+				(a, b) => a.medianCheckTime - b.medianCheckTime,
+			);
 
 			const fastestCheckTime = perLibrarySorted[0]?.medianCheckTime ?? 1;
 
 			// perLibrary is sorted alphabetically for consistent diffs
-			const perLibrary = Array.from(totalsMap.entries())
-				.map(([library, totals]) => ({
-					library,
-					medianCheckTime: totals.medianCheckTime,
-					totalTime: totals.totalTime,
-					fileCount: totals.fileCount,
-					typeCount: totals.typeCount,
-					instantiationCount: totals.instantiationCount,
-				}))
+			const perLibrary = Array.from(totalsMap.values())
 				.sort((a, b) => a.library.localeCompare(b.library))
 				.map((x) => ({
 					...x,
