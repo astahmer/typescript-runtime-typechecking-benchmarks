@@ -4,7 +4,7 @@ const Address = type({
 	street: "string",
 	city: "string",
 	zip: "string",
-	country: "'US'|'CA'|'GB'|'FR'|'DE'|'AU'",
+	country: type.enumerated("US", "CA", "GB", "FR", "DE", "AU"),
 });
 
 const LineItem = type({
@@ -13,11 +13,16 @@ const LineItem = type({
 	price: "number >= 0",
 });
 
+const CardBrand = type.enumerated("visa", "mc", "amex");
+
 const PaymentCard = type({
-	method: "'card'",
-	card: { last4: "string", brand: "'visa'|'mc'|'amex'" },
+	method: type.enumerated("card"),
+	card: { last4: "string", brand: CardBrand },
 });
-const PaymentPayPal = type({ method: "'paypal'", email: "string.email" });
+const PaymentPayPal = type({
+	method: type.enumerated("paypal"),
+	email: "string.email",
+});
 const Payment = PaymentCard.or(PaymentPayPal);
 
 const Order = type({

@@ -3,13 +3,24 @@ import { type } from "arktype";
 const DataItem = type({
 	a: "string",
 	b: "number",
-	c: "'x'|'y'|'z'",
+	c: type.enumerated("x", "y", "z"),
 });
 
 const UnionType = type("string")
 	.or("number")
 	.or("boolean")
-	.or([["string", "number"]]);
+	.or(type(["string", "number"]));
+
+const Meta = type({
+	tags: "string[]",
+	count: "number",
+});
+
+const NestedData = type({
+	id: "string",
+	data: DataItem.array(),
+	meta: Meta,
+});
 
 const Big = type({
 	n0: "number >= 0",
@@ -92,46 +103,14 @@ const Big = type({
 	u17: UnionType,
 	u18: UnionType,
 	u19: UnionType,
-	nested0: {
-		id: "string",
-		data: DataItem.array(),
-		meta: { tags: "string[]", count: "number" },
-	},
-	nested1: {
-		id: "string",
-		data: DataItem.array(),
-		meta: { tags: "string[]", count: "number" },
-	},
-	nested2: {
-		id: "string",
-		data: DataItem.array(),
-		meta: { tags: "string[]", count: "number" },
-	},
-	nested3: {
-		id: "string",
-		data: DataItem.array(),
-		meta: { tags: "string[]", count: "number" },
-	},
-	nested4: {
-		id: "string",
-		data: DataItem.array(),
-		meta: { tags: "string[]", count: "number" },
-	},
-	nested5: {
-		id: "string",
-		data: DataItem.array(),
-		meta: { tags: "string[]", count: "number" },
-	},
-	nested6: {
-		id: "string",
-		data: DataItem.array(),
-		meta: { tags: "string[]", count: "number" },
-	},
-	nested7: {
-		id: "string",
-		data: DataItem.array(),
-		meta: { tags: "string[]", count: "number" },
-	},
+	nested0: NestedData,
+	nested1: NestedData,
+	nested2: NestedData,
+	nested3: NestedData,
+	nested4: NestedData,
+	nested5: NestedData,
+	nested6: NestedData,
+	nested7: NestedData,
 });
 
 type T = typeof Big.infer;

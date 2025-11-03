@@ -1,11 +1,13 @@
 import { type } from "arktype";
 
 // Schema
+const Role = type.enumerated("user", "admin");
+
 const User = type({
 	id: "string",
 	email: "string.email",
 	age: "0 <= number.integer <= 120",
-	roles: "('user'|'admin')[]",
+	roles: Role.array(),
 });
 
 // Inferred type

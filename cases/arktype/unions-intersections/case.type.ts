@@ -2,31 +2,37 @@ import { type } from "arktype";
 
 const MapItem = type({ k: "string", v: "string | number" });
 
+const Tags = type.enumerated("new", "hot", "sale", "archived");
+const Flags = type({
+	featured: "boolean",
+	rating: "number",
+});
+
 const VariantA = type({
-	kind: "'a'",
+	kind: type.enumerated("a"),
 	x: "number.integer >= 0",
-	payload: [["string", "number"]],
+	payload: type(["string", "number"]).array(),
 	createdAt: "Date",
-	tags: "('new'|'hot'|'sale'|'archived')[]",
-	flags: { featured: "boolean", rating: "number" },
+	tags: Tags.array(),
+	flags: Flags,
 });
 
 const VariantB = type({
-	kind: "'b'",
+	kind: type.enumerated("b"),
 	y: "string",
-	extra: "(string|number|boolean)[]",
+	extra: type("string | number | boolean").array(),
 	createdAt: "Date",
-	tags: "('new'|'hot'|'sale'|'archived')[]",
-	flags: { featured: "boolean", rating: "number" },
+	tags: Tags.array(),
+	flags: Flags,
 });
 
 const VariantC = type({
-	kind: "'c'",
+	kind: type.enumerated("c"),
 	zed: "boolean",
 	map: MapItem.array(),
 	createdAt: "Date",
-	tags: "('new'|'hot'|'sale'|'archived')[]",
-	flags: { featured: "boolean", rating: "number" },
+	tags: Tags.array(),
+	flags: Flags,
 });
 
 const Union = VariantA.or(VariantB).or(VariantC);

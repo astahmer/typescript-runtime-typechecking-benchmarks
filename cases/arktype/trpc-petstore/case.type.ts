@@ -1,6 +1,11 @@
 import { initTRPC } from "@trpc/server";
 import { type } from "arktype";
 
+// XXX.array()
+// type.enumerated
+// cache types (re-use)
+// discriminated union
+
 const t = initTRPC.create();
 
 // Common schemas
@@ -17,7 +22,7 @@ const PaginationMeta = type({
 });
 
 // Pet schemas
-const PetStatus = type("'available'|'pending'|'sold'");
+const PetStatus = type.enumerated("available", "pending", "sold");
 
 const Category = type({
 	id: Id,
@@ -44,8 +49,8 @@ const Pet = type({
 	id: Id,
 	name: "1<=string<=100",
 	category: Category,
-	photoUrls: [Url, "[]"],
-	tags: [Tag, "[]"],
+	photoUrls: Url.array(),
+	tags: Tag.array(),
 	status: PetStatus,
 	price: "number>=0",
 	"weight?": "number>=0.1",
@@ -53,7 +58,7 @@ const Pet = type({
 	"birthDate?": "string.date.iso",
 	"breed?": "string",
 	"description?": "string<=1000",
-	"vaccinations?": [Vaccination, "[]"],
+	"vaccinations?": Vaccination.array(),
 	"microchipId?": "string",
 	createdAt: Timestamp,
 	updatedAt: Timestamp,
@@ -62,8 +67,8 @@ const Pet = type({
 const CreatePetInput = type({
 	name: "1<=string<=100",
 	categoryId: Id,
-	photoUrls: [Url, "[]"],
-	tagIds: [Id, "[]"],
+	photoUrls: Url.array(),
+	tagIds: Id.array(),
 	"status?": PetStatus,
 	price: "number>=0",
 	"weight?": "number>=0.1",
@@ -76,8 +81,8 @@ const UpdatePetInput = type({
 	id: Id,
 	"name?": "1<=string<=100",
 	"categoryId?": Id,
-	"photoUrls?": [Url, "[]"],
-	"tagIds?": [Id, "[]"],
+	"photoUrls?": Url.array(),
+	"tagIds?": Id.array(),
 	"status?": PetStatus,
 	"price?": "number>=0",
 	"weight?": "number>=0.1",
@@ -85,10 +90,30 @@ const UpdatePetInput = type({
 });
 
 // Order schemas
-const OrderStatus = type(
-	"'placed'|'approved'|'processing'|'shipped'|'delivered'|'cancelled'",
+const OrderStatus = type.enumerated(
+	"placed",
+	"approved",
+	"processing",
+	"shipped",
+	"delivered",
+	"cancelled",
 );
-const PaymentStatus = type("'pending'|'completed'|'failed'|'refunded'");
+const PaymentStatus = type.enumerated(
+	"pending",
+	"completed",
+	"failed",
+	"refunded",
+);
+
+const ShippingCountry = type.enumerated(
+	"US",
+	"CA",
+	"GB",
+	"FR",
+	"DE",
+	"AU",
+	"JP",
+);
 
 const ShippingAddress = type({
 	street: "string",
@@ -96,14 +121,22 @@ const ShippingAddress = type({
 	city: "string",
 	state: "string",
 	zipCode: /^\d{5}(-\d{4})?$/,
-	country: "'US'|'CA'|'GB'|'FR'|'DE'|'AU'|'JP'",
+	country: ShippingCountry,
 	phone: /^\+?[\d\s-()]+$/,
 });
 
+const PaymentMethodType = type.enumerated(
+	"credit_card",
+	"paypal",
+	"bank_transfer",
+	"crypto",
+);
+const CardBrand = type.enumerated("visa", "mastercard", "amex", "discover");
+
 const PaymentMethod = type({
-	type: "'credit_card'|'paypal'|'bank_transfer'|'crypto'",
+	type: PaymentMethodType,
 	"last4?": "string==4",
-	"brand?": "'visa'|'mastercard'|'amex'|'discover'",
+	"brand?": CardBrand,
 	"expiryMonth?": "1<=number.integer<=12",
 	"expiryYear?": "number.integer>=2024",
 	"email?": Email,
@@ -111,7 +144,7 @@ const PaymentMethod = type({
 	"accountNumber?": "string",
 	"routingNumber?": "string",
 	"bankName?": "string",
-	"currency?": "'BTC'|'ETH'|'USDC'",
+	"currency?": type.enumerated("BTC", "ETH", "USDC"),
 	"walletAddress?": "string",
 	"transactionHash?": "string",
 });
@@ -127,7 +160,7 @@ const Order = type({
 	id: Id,
 	orderNumber: "string",
 	customerId: Id,
-	items: [OrderItem, "[]"],
+	items: OrderItem.array(),
 	status: OrderStatus,
 	paymentStatus: PaymentStatus,
 	shippingAddress: ShippingAddress,
@@ -151,13 +184,10 @@ const Order = type({
 });
 
 const CreateOrderInput = type({
-	items: [
-		{
-			petId: Id,
-			quantity: "number.integer>=1",
-		},
-		"[]",
-	],
+	items: type({
+		petId: Id,
+		quantity: "number.integer>=1",
+	}).array(),
 	shippingAddress: ShippingAddress,
 	"billingAddress?": ShippingAddress,
 	paymentMethod: PaymentMethod,
@@ -165,18 +195,22 @@ const CreateOrderInput = type({
 });
 
 // Customer schemas
+const CustomerAddressType = type.enumerated("home", "work", "other");
+
 const CustomerAddress = type({
 	id: Id,
-	type: "'home'|'work'|'other'",
+	type: CustomerAddressType,
 	street: "string",
 	"unit?": "string",
 	city: "string",
 	state: "string",
 	zipCode: /^\d{5}(-\d{4})?$/,
-	country: "'US'|'CA'|'GB'|'FR'|'DE'|'AU'|'JP'",
+	country: ShippingCountry,
 	phone: /^\+?[\d\s-()]+$/,
 	isDefault: "boolean",
 });
+
+const MembershipTier = type.enumerated("bronze", "silver", "gold", "platinum");
 
 const Customer = type({
 	id: Id,
@@ -185,17 +219,16 @@ const Customer = type({
 	lastName: "1<=string<=50",
 	"phone?": /^\+?[\d\s-()]+$/,
 	"dateOfBirth?": "string.date.iso",
-	addresses: [CustomerAddress, "[]"],
+	addresses: CustomerAddress.array(),
 	preferences: {
 		newsletter: "boolean",
 		smsNotifications: "boolean",
 		emailNotifications: "boolean",
-		favoriteCategories: [Id, "[]"],
-		"preferredPaymentMethod?":
-			"'credit_card'|'paypal'|'bank_transfer'|'crypto'",
+		favoriteCategories: Id.array(),
+		"preferredPaymentMethod?": PaymentMethodType,
 	},
 	loyaltyPoints: "number.integer>=0",
-	membershipTier: "'bronze'|'silver'|'gold'|'platinum'",
+	membershipTier: MembershipTier,
 	createdAt: Timestamp,
 	updatedAt: Timestamp,
 	"lastLoginAt?": Timestamp,
@@ -220,13 +253,18 @@ const UpdateProfileInput = type({
 		newsletter: "boolean",
 		smsNotifications: "boolean",
 		emailNotifications: "boolean",
-		favoriteCategories: [Id, "[]"],
-		"preferredPaymentMethod?":
-			"'credit_card'|'paypal'|'bank_transfer'|'crypto'",
+		favoriteCategories: Id.array(),
+		"preferredPaymentMethod?": PaymentMethodType,
 	},
 });
 
 // Review schemas
+const ReviewImage = type({
+	id: Id,
+	url: Url,
+	"caption?": "string",
+});
+
 const Review = type({
 	id: Id,
 	petId: Id,
@@ -235,21 +273,14 @@ const Review = type({
 		id: Id,
 		firstName: "string",
 		lastName: "string",
-		membershipTier: "'bronze'|'silver'|'gold'|'platinum'",
+		membershipTier: MembershipTier,
 	},
 	rating: "1<=number.integer<=5",
 	title: "1<=string<=200",
 	comment: "1<=string<=2000",
-	"images?": [
-		{
-			id: Id,
-			url: Url,
-			"caption?": "string",
-		},
-		"[]",
-	],
-	"pros?": ["string", "[]"],
-	"cons?": ["string", "[]"],
+	"images?": ReviewImage.array(),
+	"pros?": "string[]",
+	"cons?": "string[]",
 	wouldRecommend: "boolean",
 	helpful: "number.integer>=0",
 	notHelpful: "number.integer>=0",
@@ -268,15 +299,12 @@ const CreateReviewInput = type({
 	rating: "1<=number.integer<=5",
 	title: "1<=string<=200",
 	comment: "1<=string<=2000",
-	"images?": [
-		{
-			url: Url,
-			"caption?": "string",
-		},
-		"[]",
-	],
-	"pros?": ["string", "[]"],
-	"cons?": ["string", "[]"],
+	"images?": type({
+		url: Url,
+		"caption?": "string",
+	}).array(),
+	"pros?": "string[]",
+	"cons?": "string[]",
 	wouldRecommend: "boolean",
 });
 
@@ -328,25 +356,19 @@ const SalesMetrics = type({
 	totalOrders: "number.integer>=0",
 	averageOrderValue: "number>=0",
 	conversionRate: "0<=number<=100",
-	topSellingPets: [
-		{
-			petId: Id,
-			name: "string",
-			category: "string",
-			unitsSold: "number.integer>=0",
-			revenue: "number>=0",
-		},
-		"[]",
-	],
-	revenueByCategory: [
-		{
-			categoryId: Id,
-			categoryName: "string",
-			revenue: "number>=0",
-			orders: "number.integer>=0",
-		},
-		"[]",
-	],
+	topSellingPets: type({
+		petId: Id,
+		name: "string",
+		category: "string",
+		unitsSold: "number.integer>=0",
+		revenue: "number>=0",
+	}).array(),
+	revenueByCategory: type({
+		categoryId: Id,
+		categoryName: "string",
+		revenue: "number>=0",
+		orders: "number.integer>=0",
+	}).array(),
 });
 
 const CustomerMetrics = type({
@@ -368,20 +390,17 @@ const AnalyticsReport = type({
 	period: {
 		start: Timestamp,
 		end: Timestamp,
-		type: "'day'|'week'|'month'|'quarter'|'year'",
+		type: type.enumerated("day", "week", "month", "quarter", "year"),
 	},
 	sales: SalesMetrics,
 	customers: CustomerMetrics,
 	inventory: InventoryMetrics,
-	trends: [
-		{
-			date: Timestamp,
-			revenue: "number",
-			orders: "number.integer",
-			newCustomers: "number.integer",
-		},
-		"[]",
-	],
+	trends: type({
+		date: Timestamp,
+		revenue: "number",
+		orders: "number.integer",
+		newCustomers: "number.integer",
+	}).array(),
 });
 
 // Mock data factories
@@ -626,8 +645,8 @@ const appRouter = t.router({
 				type({
 					page: "number.integer>=1",
 					limit: "1<=number.integer<=100",
-					"sortBy?": "'name'|'createdAt'|'price'",
-					"sortOrder?": "'asc'|'desc'",
+					"sortBy?": type.enumerated("name", "createdAt", "price"),
+					"sortOrder?": type.enumerated("asc", "desc"),
 					"status?": PetStatus,
 					"categoryId?": Id,
 					"minPrice?": "number>=0",
@@ -637,7 +656,7 @@ const appRouter = t.router({
 			)
 			.output(
 				type({
-					data: [Pet, "[]"],
+					data: Pet.array(),
 					pagination: PaginationMeta,
 				}),
 			)
@@ -682,8 +701,8 @@ const appRouter = t.router({
 				type({
 					page: "number.integer>=1",
 					limit: "1<=number.integer<=100",
-					"sortBy?": "'name'|'createdAt'|'price'",
-					"sortOrder?": "'asc'|'desc'",
+					"sortBy?": type.enumerated("name", "createdAt", "price"),
+					"sortOrder?": type.enumerated("asc", "desc"),
 					"customerId?": Id,
 					"status?": OrderStatus,
 					"startDate?": Timestamp,
@@ -692,7 +711,7 @@ const appRouter = t.router({
 			)
 			.output(
 				type({
-					data: [Order, "[]"],
+					data: Order.array(),
 					pagination: PaginationMeta,
 				}),
 			)
@@ -753,9 +772,9 @@ const appRouter = t.router({
 					city: "string",
 					state: "string",
 					zipCode: /^\d{5}(-\d{4})?$/,
-					country: "'US'|'CA'|'GB'|'FR'|'DE'|'AU'|'JP'",
+					country: ShippingCountry,
 					phone: /^\+?[\d\s-()]+$/,
-					type: "'home'|'work'|'other'",
+					type: CustomerAddressType,
 					isDefault: "boolean",
 				}),
 			)
@@ -775,8 +794,8 @@ const appRouter = t.router({
 				type({
 					page: "number.integer>=1",
 					limit: "1<=number.integer<=100",
-					"sortBy?": "'name'|'createdAt'|'price'",
-					"sortOrder?": "'asc'|'desc'",
+					"sortBy?": type.enumerated("name", "createdAt", "price"),
+					"sortOrder?": type.enumerated("asc", "desc"),
 					petId: Id,
 					"minRating?": "1<=number.integer<=5",
 					"verified?": "boolean",
@@ -784,7 +803,7 @@ const appRouter = t.router({
 			)
 			.output(
 				type({
-					data: [Review, "[]"],
+					data: Review.array(),
 					pagination: PaginationMeta,
 					averageRating: "0<=number<=5",
 					ratingDistribution: {
@@ -836,14 +855,14 @@ const appRouter = t.router({
 			)
 			.output(
 				type({
-					data: [InventoryItem, "[]"],
+					data: InventoryItem.array(),
 				}),
 			)
 			.query(() => ({ data: [mockInventoryItem] })),
 
 		getByPetId: t.procedure
 			.input(type({ petId: Id }))
-			.output(type([InventoryItem, "[]"]))
+			.output(InventoryItem.array())
 			.query(() => [mockInventoryItem]),
 
 		updateStock: t.procedure
@@ -852,7 +871,13 @@ const appRouter = t.router({
 					petId: Id,
 					warehouseId: Id,
 					quantityChange: "number.integer",
-					reason: "'purchase'|'return'|'restock'|'adjustment'|'damage'",
+					reason: type.enumerated(
+						"purchase",
+						"return",
+						"restock",
+						"adjustment",
+						"damage",
+					),
 				}),
 			)
 			.output(InventoryItem)
@@ -866,7 +891,7 @@ const appRouter = t.router({
 				type({
 					startDate: Timestamp,
 					endDate: Timestamp,
-					groupBy: "'day'|'week'|'month'",
+					groupBy: type.enumerated("day", "week", "month"),
 				}),
 			)
 			.output(AnalyticsReport)
@@ -880,8 +905,8 @@ const appRouter = t.router({
 					pendingOrders: "number.integer>=0",
 					lowStockAlerts: "number.integer>=0",
 					newCustomers: "number.integer>=0",
-					recentOrders: [Order, "[]"],
-					topProducts: [Pet, "[]"],
+					recentOrders: Order.array(),
+					topProducts: Pet.array(),
 				}),
 			)
 			.query(() => ({
@@ -897,9 +922,7 @@ const appRouter = t.router({
 
 	// Category procedures
 	category: t.router({
-		list: t.procedure
-			.output(type([Category, "[]"]))
-			.query(() => [mockCategory]),
+		list: t.procedure.output(Category.array()).query(() => [mockCategory]),
 
 		create: t.procedure
 			.input(

@@ -6,29 +6,29 @@ const Timestamp = type("string.date.iso");
 const Email = type("string.email");
 const Url = type(/^https?:\/\/.+/);
 
+const SortBy = type.enumerated("name", "createdAt", "price");
+const SortOrder = type.enumerated("asc", "desc");
+
 const PaginationParams = type({
 	"page?": "number.integer>=1",
 	"limit?": "1<=number.integer<=100",
-	"sortBy?": "'name'|'createdAt'|'price'",
-	"sortOrder?": "'asc'|'desc'",
+	"sortBy?": SortBy,
+	"sortOrder?": SortOrder,
 });
 
 const ErrorResponse = type({
 	error: {
 		code: "string",
 		message: "string",
-		"details?": [
-			{
-				field: "string",
-				message: "string",
-			},
-			"[]",
-		],
+		"details?": type({
+			field: "string",
+			message: "string",
+		}).array(),
 	},
 });
 
 // Pet schemas
-const PetStatus = type("'available'|'pending'|'sold'");
+const PetStatus = type.enumerated("available", "pending", "sold");
 
 const Category = type({
 	id: Id,
@@ -40,24 +40,23 @@ const Tag = type({
 	name: "string",
 });
 
+const Vaccination = type({
+	name: "string",
+	date: "string.date.iso",
+	"expiresAt?": "string.date.iso",
+}).array();
+
 const Pet = type({
 	id: Id,
 	name: "1<=string<=100",
 	category: Category,
-	photoUrls: [Url, "[]"],
-	tags: [Tag, "[]"],
+	photoUrls: Url.array(),
+	tags: Tag.array(),
 	status: PetStatus,
 	price: "number>=0",
 	"weight?": "number>=0.1",
 	"birthDate?": "string.date.iso",
-	"vaccinations?": [
-		{
-			name: "string",
-			date: "string.date.iso",
-			"expiresAt?": "string.date.iso",
-		},
-		"[]",
-	],
+	"vaccinations?": Vaccination,
 	createdAt: Timestamp,
 	updatedAt: Timestamp,
 });
@@ -65,8 +64,8 @@ const Pet = type({
 const CreatePetRequest = type({
 	name: "1<=string<=100",
 	categoryId: Id,
-	photoUrls: [Url, "[]"],
-	tagIds: [Id, "[]"],
+	photoUrls: Url.array(),
+	tagIds: Id.array(),
 	"status?": PetStatus,
 	price: "number>=0",
 	"weight?": "number>=0.1",
@@ -76,8 +75,8 @@ const CreatePetRequest = type({
 const UpdatePetRequest = type({
 	"name?": "1<=string<=100",
 	"categoryId?": Id,
-	"photoUrls?": [Url, "[]"],
-	"tagIds?": [Id, "[]"],
+	"photoUrls?": Url.array(),
+	"tagIds?": Id.array(),
 	"status?": PetStatus,
 	"price?": "number>=0",
 	"weight?": "number>=0.1",
@@ -92,23 +91,40 @@ const PaginationMeta = type({
 });
 
 const PetListResponse = type({
-	data: [Pet, "[]"],
+	data: Pet.array(),
 	pagination: PaginationMeta,
 });
 
 // Order schemas
-const OrderStatus = type("'placed'|'approved'|'delivered'|'cancelled'");
+const OrderStatus = type.enumerated(
+	"placed",
+	"approved",
+	"delivered",
+	"cancelled",
+);
+
+const ShippingCountry = type.enumerated(
+	"US",
+	"CA",
+	"GB",
+	"FR",
+	"DE",
+	"AU",
+	"JP",
+);
 
 const ShippingAddress = type({
 	street: "string",
 	city: "string",
 	state: "string",
 	zipCode: /^\d{5}(-\d{4})?$/,
-	country: "'US'|'CA'|'GB'|'FR'|'DE'|'AU'|'JP'",
+	country: ShippingCountry,
 });
 
+const PaymentType = type.enumerated("credit_card", "paypal", "bank_transfer");
+
 const PaymentMethod = type({
-	type: "'credit_card'|'paypal'|'bank_transfer'",
+	type: PaymentType,
 	"last4?": "string==4",
 	"expiryMonth?": "1<=number.integer<=12",
 	"expiryYear?": "number.integer>=2024",
@@ -138,7 +154,7 @@ const Order = type({
 });
 
 const CreateOrderPaymentMethod = type({
-	type: "'credit_card'|'paypal'|'bank_transfer'",
+	type: PaymentType,
 	"cardNumber?": /^\d{16}$/,
 	"cvv?": /^\d{3,4}$/,
 	"expiryMonth?": "1<=number.integer<=12",
@@ -156,14 +172,16 @@ const CreateOrderRequest = type({
 });
 
 // Customer schemas
+const CustomerAddressType = type.enumerated("home", "work", "other");
+
 const CustomerAddress = type({
 	id: Id,
-	type: "'home'|'work'|'other'",
+	type: CustomerAddressType,
 	street: "string",
 	city: "string",
 	state: "string",
 	zipCode: /^\d{5}(-\d{4})?$/,
-	country: "'US'|'CA'|'GB'|'FR'|'DE'|'AU'|'JP'",
+	country: ShippingCountry,
 	isDefault: "boolean",
 });
 
@@ -173,11 +191,11 @@ const Customer = type({
 	firstName: "1<=string<=50",
 	lastName: "1<=string<=50",
 	"phone?": /^\+?[\d\s-()]+$/,
-	addresses: [CustomerAddress, "[]"],
+	addresses: CustomerAddress.array(),
 	preferences: {
 		newsletter: "boolean",
 		smsNotifications: "boolean",
-		favoriteCategories: [Id, "[]"],
+		favoriteCategories: Id.array(),
 	},
 	loyaltyPoints: "number.integer>=0",
 	createdAt: Timestamp,
@@ -201,7 +219,7 @@ const Review = type({
 	rating: "1<=number.integer<=5",
 	title: "1<=string<=200",
 	comment: "1<=string<=2000",
-	"images?": [Url, "[]"],
+	"images?": Url.array(),
 	helpful: "number.integer>=0",
 	notHelpful: "number.integer>=0",
 	verified: "boolean",
@@ -219,7 +237,7 @@ const CreateReviewRequest = type({
 	rating: "1<=number.integer<=5",
 	title: "1<=string<=200",
 	comment: "1<=string<=2000",
-	"images?": [Url, "[]"],
+	"images?": Url.array(),
 });
 
 // Inventory schemas
@@ -256,15 +274,12 @@ const AnalyticsReport = type({
 		totalRevenue: "number>=0",
 		totalOrders: "number.integer>=0",
 		averageOrderValue: "number>=0",
-		topSellingPets: [
-			{
-				petId: Id,
-				name: "string",
-				unitsSold: "number.integer>=0",
-				revenue: "number>=0",
-			},
-			"[]",
-		],
+		topSellingPets: type({
+			petId: Id,
+			name: "string",
+			unitsSold: "number.integer>=0",
+			revenue: "number>=0",
+		}).array(),
 	},
 	customers: {
 		newCustomers: "number.integer>=0",
@@ -307,7 +322,7 @@ const API = type({
 		query: PaginationParams,
 		response: type([
 			type({
-				data: [Order, "[]"],
+				data: Order.array(),
 				pagination: PaginationMeta,
 			}),
 			"|",
@@ -347,7 +362,7 @@ const API = type({
 			"preferences?": {
 				newsletter: "boolean",
 				smsNotifications: "boolean",
-				favoriteCategories: [Id, "[]"],
+				favoriteCategories: Id.array(),
 			},
 		}),
 		response: type([Customer, "|", ErrorResponse]),
@@ -359,7 +374,7 @@ const API = type({
 		query: PaginationParams,
 		response: type([
 			type({
-				data: [Review, "[]"],
+				data: Review.array(),
 				pagination: PaginationMeta,
 				averageRating: "0<=number<=5",
 			}),
@@ -380,7 +395,7 @@ const API = type({
 		}),
 		response: type([
 			type({
-				data: [InventoryItem, "[]"],
+				data: InventoryItem.array(),
 			}),
 			"|",
 			ErrorResponse,
@@ -392,7 +407,7 @@ const API = type({
 		query: type({
 			startDate: Timestamp,
 			endDate: Timestamp,
-			"groupBy?": "'day'|'week'|'month'",
+			"groupBy?": type.enumerated("day", "week", "month"),
 		}),
 		response: type([AnalyticsReport, "|", ErrorResponse]),
 	},
