@@ -193,7 +193,7 @@ async function runCheck() {
 				string,
 				Array<{
 					library: string;
-					checkTime: number;
+					medianCheckTime: number;
 					checkTimeStats: {
 						mean: number;
 						median: number;
@@ -214,7 +214,7 @@ async function runCheck() {
 			for (const p of parsed) {
 				(cases[p.testCase] ||= []).push({
 					library: p.library,
-					checkTime: p.checkTimeStats.median,
+					medianCheckTime: p.checkTimeStats.median,
 					checkTimeStats: p.checkTimeStats,
 					runs: p.runs,
 					totalTime: p.metrics.totalTime,
@@ -228,10 +228,10 @@ async function runCheck() {
 
 			// Calculate ratios against fastest checkTime
 			for (const key of Object.keys(cases)) {
-				const fastest = Math.min(...cases[key].map((x) => x.checkTime));
+				const fastest = Math.min(...cases[key].map((x) => x.medianCheckTime));
 				cases[key] = cases[key].map((x) => ({
 					...x,
-					ratioVsFastest: Number((x.checkTime / fastest).toFixed(2)),
+					ratioVsFastest: Number((x.medianCheckTime / fastest).toFixed(2)),
 				}));
 			}
 
@@ -239,7 +239,7 @@ async function runCheck() {
 			const totalsMap = new Map<
 				string,
 				{
-					checkTime: number;
+					medianCheckTime: number;
 					totalTime: number;
 					memoryUsed: number;
 					fileCount: number;
@@ -250,7 +250,7 @@ async function runCheck() {
 
 			for (const p of parsed) {
 				const current = totalsMap.get(p.library) || {
-					checkTime: 0,
+					medianCheckTime: 0,
 					totalTime: 0,
 					memoryUsed: 0,
 					fileCount: 0,
@@ -258,7 +258,7 @@ async function runCheck() {
 					instantiationCount: 0,
 				};
 				totalsMap.set(p.library, {
-					checkTime: current.checkTime + p.checkTimeStats.median,
+					medianCheckTime: current.medianCheckTime + p.checkTimeStats.median,
 					totalTime: current.totalTime + p.metrics.totalTime,
 					memoryUsed: current.memoryUsed + p.metrics.memoryUsed,
 					fileCount: current.fileCount + p.metrics.files,
@@ -271,21 +271,21 @@ async function runCheck() {
 			const perLibrarySorted = Array.from(totalsMap.entries())
 				.map(([library, totals]) => ({
 					library,
-					checkTime: totals.checkTime,
+					medianCheckTime: totals.medianCheckTime,
 					totalTime: totals.totalTime,
 					fileCount: totals.fileCount,
 					typeCount: totals.typeCount,
 					instantiationCount: totals.instantiationCount,
 				}))
-				.sort((a, b) => a.checkTime - b.checkTime);
+				.sort((a, b) => a.medianCheckTime - b.medianCheckTime);
 
-			const fastestCheckTime = perLibrarySorted[0]?.checkTime ?? 1;
+			const fastestCheckTime = perLibrarySorted[0]?.medianCheckTime ?? 1;
 
 			// perLibrary is sorted alphabetically for consistent diffs
 			const perLibrary = Array.from(totalsMap.entries())
 				.map(([library, totals]) => ({
 					library,
-					checkTime: totals.checkTime,
+					medianCheckTime: totals.medianCheckTime,
 					totalTime: totals.totalTime,
 					fileCount: totals.fileCount,
 					typeCount: totals.typeCount,
@@ -294,7 +294,9 @@ async function runCheck() {
 				.sort((a, b) => a.library.localeCompare(b.library))
 				.map((x) => ({
 					...x,
-					ratioVsFastest: Number((x.checkTime / fastestCheckTime).toFixed(2)),
+					ratioVsFastest: Number(
+						(x.medianCheckTime / fastestCheckTime).toFixed(2),
+					),
 				}));
 
 			// ranking is sorted by performance (checkTime)
